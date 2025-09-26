@@ -16,7 +16,7 @@ const createAuthRoutes = (pool) => {
         try {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
-            const sql = 'INSERT INTO votantes (numero_colegiado, nombre_completo, email, dpi, fecha_nacimiento, password) VALUES (?, ?, ?, ?, ?, ?)';
+            const sql = 'INSERT INTO votantes (numero_colegiado, nombre_completo, email, dpi, fecha_nacimiento, password) VALUES ($1, $2, $3, $4, $5, $6)';
             await pool.query(sql, [numero_colegiado, nombre_completo, email, dpi, fecha_nacimiento, hashedPassword]);
             res.status(201).json({ message: 'Votante registrado exitosamente.' });
         } catch (error) {
@@ -36,8 +36,9 @@ const createAuthRoutes = (pool) => {
             return res.status(400).json({ message: 'Todos los campos son obligatorios.' });
         }
         try {
-            const sql = 'SELECT * FROM votantes WHERE numero_colegiado = ?';
-            const [users] = await pool.query(sql, [numero_colegiado]);
+            const sql = 'SELECT * FROM votantes WHERE numero_colegiado = $1';
+            const result = await pool.query(sql, [numero_colegiado]);
+            const users = result.rows;
             if (users.length === 0) {
                 return res.status(401).json({ message: 'Credenciales inválidas.' });
             }
