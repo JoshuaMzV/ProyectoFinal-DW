@@ -1,21 +1,20 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const mysql = require('mysql2/promise');
+// const mysql = require('mysql2/promise');
+const { Pool } = require('pg');
 const createAuthRoutes = require('./routes/auth'); // <-- 1. Importamos las rutas
 const createCampaignRoutes = require('./routes/campaigns'); // <-- Importa las nuevas rutas
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
+// Usamos la URL de conexión que proporciona Render y habilitamos SSL
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
 app.use(cors());
@@ -32,8 +31,8 @@ app.get('/', (req, res) => {
 
 const startServer = async () => {
     try {
-        await pool.query('SELECT 1');
-        console.log('🐘 Conectado exitosamente a la base de datos MySQL.');
+    await pool.query('SELECT 1');
+    console.log('� Conectado exitosamente a la base de datos PostgreSQL.');
 
         app.listen(PORT, () => {
             console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
