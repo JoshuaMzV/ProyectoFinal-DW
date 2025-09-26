@@ -20,6 +20,12 @@ const pool = new Pool({
 app.use(cors());
 app.use(express.json());
 
+// Configuración de CORS: la URL del frontend (por ejemplo Netlify) debe ponerse en FRONTEND_URL
+const corsOptions = {
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000'
+};
+app.use(cors(corsOptions));
+
 // --- Rutas de la API ---
 app.use('/api/auth', createAuthRoutes(pool)); // <-- 2. Usamos las rutas de autenticación
 app.use('/api/campaigns', createCampaignRoutes(pool)); // <-- 3. Usa las nuevas rutas
