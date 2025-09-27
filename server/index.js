@@ -17,13 +17,26 @@ const pool = new Pool({
     }
 });
 
-app.use(cors());
 app.use(express.json());
 
-// Configuración de CORS: la URL del frontend (por ejemplo Netlify) debe ponerse en FRONTEND_URL
+// Configuración de CORS: permitir la URL del frontend (Netlify) y localhost
+const allowedOrigins = [
+    process.env.FRONTEND_URL || 'http://localhost:3000',
+    'https://proyectofinal-dw.netlify.app'
+];
+
 const corsOptions = {
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000'
+    origin: function (origin, callback) {
+        // permitir peticiones sin origin (tools, curl, same-origin)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            return callback(null, true);
+        }
+        return callback(new Error('CORS policy: Origin not allowed'));
+    },
+    credentials: true
 };
+
 app.use(cors(corsOptions));
 
 // --- Rutas de la API ---
