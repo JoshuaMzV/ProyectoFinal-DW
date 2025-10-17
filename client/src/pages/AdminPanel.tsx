@@ -4,7 +4,7 @@ import { useAuth } from '../context/authContext';
 
 const AdminPanel = () => {
     const { user } = useAuth();
-    const [message, setMessage] = useState('');
+    const [message] = useState('');
 
     useEffect(() => {
         // placeholder: podríamos cargar campañas existentes
