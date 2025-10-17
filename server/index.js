@@ -5,6 +5,7 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const createAuthRoutes = require('./routes/auth'); // <-- 1. Importamos las rutas
 const createCampaignRoutes = require('./routes/campaigns'); // <-- Importa las nuevas rutas
+const createAdminsRoutes = require('./routes/admins'); // <-- Rutas para administradores
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -42,6 +43,7 @@ app.use(cors(corsOptions));
 // --- Rutas de la API ---
 app.use('/api/auth', createAuthRoutes(pool)); // <-- 2. Usamos las rutas de autenticación
 app.use('/api/campaigns', createCampaignRoutes(pool)); // <-- 3. Usa las nuevas rutas
+app.use('/api/admins', createAdminsRoutes(pool));
 
 // La ruta de prueba ahora puede ser eliminada o comentada si lo deseas
 app.get('/', (req, res) => {
