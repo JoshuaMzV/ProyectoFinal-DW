@@ -7,14 +7,31 @@ const createAdminsRoutes = (pool) => {
 
     // Login de admin
     router.post('/login', async (req, res) => {
-        const { username, password } = req.body;
-        if (!username || !password) return res.status(400).json({ message: 'username y password son requeridos' });
+        // Permitimos dos modos de login: por username/password o por numero_colegiado+dpi+fecha_nacimiento+password
+        const { username, password, numero_colegiado, dpi, fecha_nacimiento } = req.body;
+        if (!password) return res.status(400).json({ message: 'password es requerido' });
         try {
-            const sql = 'SELECT * FROM admins WHERE username = $1';
-            const result = await pool.query(sql, [username]);
+            let sql, result, admin;
+            if (username) {
+                sql = 'SELECT * FROM admins WHERE username = $1';
+                result = await pool.query(sql, [username]);
+            } else if (numero_colegiado && dpi && fecha_nacimiento) {
+                sql = 'SELECT * FROM admins WHERE numero_colegiado = $1';
+                result = await pool.query(sql, [numero_colegiado]);
+            } else {
+                return res.status(400).json({ message: 'Faltan credenciales para el login' });
+            }
+
             const admins = result.rows;
             if (admins.length === 0) return res.status(401).json({ message: 'Credenciales inválidas.' });
-            const admin = admins[0];
+            admin = admins[0];
+
+            // Si se inició por numero_colegiado, además verificamos dpi y fecha
+            if (!username) {
+                const dbDate = admin.fecha_nacimiento ? new Date(admin.fecha_nacimiento).toISOString().split('T')[0] : null;
+                if (admin.dpi !== dpi || dbDate !== fecha_nacimiento) return res.status(401).json({ message: 'Credenciales inválidas.' });
+            }
+
             const isMatch = await bcrypt.compare(password, admin.password);
             if (!isMatch) return res.status(401).json({ message: 'Credenciales inválidas.' });
             const payload = { id: admin.id, rol: 'admin', nombre_completo: admin.nombre_completo };
