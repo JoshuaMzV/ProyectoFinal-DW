@@ -12,15 +12,20 @@ const AppNavbar = () => {
     };
 
     return (
-        <Navbar bg="dark" variant="dark" expand="lg" className="mb-3">
+        <Navbar expand="lg" className="app-navbar mb-3">
             <Container>
                 <Navbar.Brand as={Link} to="/">Sistema de Votaciones</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
                         {user ? (
-                            // Si hay un usuario, muestra su rol y el botón de logout
-                            <NavDropdown title={`Bienvenido, ${user.rol}`} id="basic-nav-dropdown">
+                            // Si hay un usuario, muestra su nombre y primer apellido y el botón de logout
+                            <NavDropdown title={
+                                <span className="welcome-label">
+                                    <span className="welcome-text">Bienvenido,</span>
+                                    <span className="welcome-name"> {user.nombre ? user.nombre.split(' ')[0] : ''} {user.apellido ? user.apellido.split(' ')[0] : ''}</span>
+                                </span>
+                            } id="basic-nav-dropdown">
                                 <NavDropdown.Item onClick={handleLogout}>
                                     Cerrar Sesión
                                 </NavDropdown.Item>
@@ -28,8 +33,8 @@ const AppNavbar = () => {
                         ) : (
                             // Si no hay usuario, muestra los links de login y registro
                             <>
-                                <Nav.Link as={Link} to="/login">Iniciar Sesión</Nav.Link>
-                                <Nav.Link as={Link} to="/register">Registrarse</Nav.Link>
+                                <Nav.Link className="animated-link" as={Link} to="/login">Iniciar Sesión</Nav.Link>
+                                <Nav.Link className="animated-link" as={Link} to="/register">Registrarse</Nav.Link>
                             </>
                         )}
                     </Nav>

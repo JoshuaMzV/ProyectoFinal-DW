@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken'); // <-- Asegúrate de tener esta línea
 
 const router = express.Router();
+const { protect } = require('../middleware/authMiddleware');
 
 const createAuthRoutes = (pool) => {
 
@@ -51,11 +52,26 @@ const createAuthRoutes = (pool) => {
             if (user.dpi !== dpi || dbDate !== fecha_nacimiento) {
                  return res.status(401).json({ message: 'Credenciales inválidas.' });
             }
-            const payload = { id: user.id, rol: user.rol };
+            // Añadimos nombre_completo al payload para que el frontend pueda mostrar el nombre
+            const payload = { id: user.id, rol: user.rol, nombre_completo: user.nombre_completo };
             const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
             res.status(200).json({ token });
         } catch (error) {
             console.error('Error en el login:', error);
+            res.status(500).json({ message: 'Error en el servidor.' });
+        }
+    });
+
+    // Endpoint para obtener los datos del usuario autenticado
+    router.get('/me', protect, async (req, res) => {
+        try {
+            const sql = 'SELECT id, rol, nombre_completo, numero_colegiado, email FROM votantes WHERE id = $1';
+            const result = await pool.query(sql, [req.user.id]);
+            const user = result.rows[0];
+            if (!user) return res.status(404).json({ message: 'Usuario no encontrado.' });
+            res.json({ user });
+        } catch (error) {
+            console.error('Error al obtener usuario:', error);
             res.status(500).json({ message: 'Error en el servidor.' });
         }
     });

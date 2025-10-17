@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.scss';
 import { AuthProvider } from './context/authContext'; // <-- Importa el proveedor
 import AppNavbar from './components/Navbar'; // <-- Importa el Navbar
 import HomePage from './pages/HomePage';
@@ -7,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import { Container } from 'react-bootstrap';
 import ProtectedRoute from './components/ProtectedRoutes';
 import CampaignDetailPage from './pages/CampaignDetailPage'; // <-- Importa la nueva página
+import AdminPanel from './pages/AdminPanel';
 
 function App() {
   return (
@@ -35,6 +37,14 @@ function App() {
             />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute adminOnly>
+                  <AdminPanel />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </Container>
       </Router>

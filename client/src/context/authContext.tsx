@@ -3,8 +3,15 @@ import { jwtDecode } from 'jwt-decode';
 import * as authService from '../services/authService';
 
 // 1. Definimos la forma de los datos que compartiremos
+interface UserType {
+    id?: number;
+    rol?: string;
+    nombre?: string;
+    apellido?: string;
+}
+
 interface AuthContextType {
-    user: { id: number; rol: string } | null;
+    user: UserType | null;
     isLoading: boolean; // indica si aún verificamos la sesión
     login: (userData: authService.LoginData) => Promise<void>;
     logout: () => void;
@@ -15,24 +22,49 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // 3. Creamos el "Proveedor", el componente que envolverá nuestra aplicación
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<{ id: number; rol: string } | null>(null);
+    const [user, setUser] = useState<UserType | null>(null);
     const [isLoading, setIsLoading] = useState(true); // iniciamos en true hasta verificar el token
 
     // Este efecto se ejecuta una sola vez cuando la app carga
     useEffect(() => {
-        try {
-            const token = localStorage.getItem('authToken');
-            if (token) {
-                const decodedUser: { id: number; rol: string } = jwtDecode(token);
-                setUser(decodedUser);
-            }
-        } catch (error) {
+        const init = async () => {
+            try {
+                const token = localStorage.getItem('authToken');
+                if (token) {
+                    // Intentamos obtener datos reales del servidor
+                    try {
+                        const serverUser = await authService.getCurrentUser();
+                        const nombreCompleto = serverUser.nombre_completo || serverUser.nombre_completo || '';
+                        const parts = (nombreCompleto || '').trim().split(/\s+/);
+                        setUser({
+                            id: serverUser.id,
+                            rol: serverUser.rol,
+                            nombre: parts[0] || '',
+                            apellido: parts[1] || '',
+                        });
+                        return;
+                    } catch (err) {
+                        // Si falla la petición al servidor, hacemos fallback a decodificar el token
+                        const decodedUser: any = jwtDecode(token);
+                        const nombreCompleto = decodedUser.nombre_completo || decodedUser.nombre || decodedUser.name || decodedUser.firstName || '';
+                        const parts = nombreCompleto.trim().split(/\s+/);
+                        setUser({
+                            id: decodedUser.id || decodedUser.sub,
+                            rol: decodedUser.rol || decodedUser.role,
+                            nombre: parts[0] || '',
+                            apellido: parts[1] || '',
+                        });
+                    }
+                }
+            } catch (error) {
             // Si el token es inválido, lo limpiamos
             localStorage.removeItem('authToken');
             setUser(null);
-        } finally {
-            setIsLoading(false);
-        }
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        init();
     }, []);
 
     // Función de login que actualiza el estado global
@@ -40,8 +72,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         await authService.login(userData);
         const token = localStorage.getItem('authToken');
         if (token) {
-            const decodedUser: { id: number; rol: string } = jwtDecode(token);
-            setUser(decodedUser);
+            const decodedUser: any = jwtDecode(token);
+            const nombreCompleto = decodedUser.nombre_completo || decodedUser.nombre || decodedUser.name || decodedUser.firstName || '';
+            const parts = nombreCompleto.trim().split(/\s+/);
+            setUser({
+                id: decodedUser.id || decodedUser.sub,
+                rol: decodedUser.rol || decodedUser.role,
+                nombre: parts[0] || '',
+                apellido: parts[1] || '',
+            });
         }
     };
 
