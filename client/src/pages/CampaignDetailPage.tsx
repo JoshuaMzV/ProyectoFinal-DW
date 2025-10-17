@@ -1,8 +1,22 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Card, Button, ListGroup, Spinner, Alert } from 'react-bootstrap';
-// 1. Importa la nueva función para votar
+// Chart
+import { Bar } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+
+// 1. Importa la nueva función para votar (debe ir antes de ejecutar código)
 import { getCampaignById, voteForCandidate, Campaign } from '../services/conpaignService';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const CampaignDetailPage = () => {
     // useParams nos da acceso a los parámetros de la URL, en este caso el ':id'
@@ -12,6 +26,8 @@ const CampaignDetailPage = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(''); // Estado para mensajes de éxito
     const [isLoading, setIsLoading] = useState(true);
+    const [timeLeft, setTimeLeft] = useState<number | null>(null);
+    const [isVoting, setIsVoting] = useState<Record<number, boolean>>({});
 
     // Extraemos la lógica de fetching para poder reutilizarla
     const fetchCampaign = useCallback(async () => {
@@ -31,6 +47,20 @@ const CampaignDetailPage = () => {
         fetchCampaign();
     }, [fetchCampaign]);
 
+    // Countdown: calcula el tiempo restante en segundos
+    useEffect(() => {
+        if (!campaign || !campaign.fecha_fin) return;
+        const end = new Date(campaign.fecha_fin).getTime();
+        const update = () => {
+            const now = Date.now();
+            const diff = Math.max(0, Math.floor((end - now) / 1000));
+            setTimeLeft(diff);
+        };
+        update();
+        const t = setInterval(update, 1000);
+        return () => clearInterval(t);
+    }, [campaign]);
+
     // 2. Hacemos la función 'async' para poder llamar a la API
     const handleVote = async (candidateId: number) => {
         // Limpiamos mensajes anteriores
@@ -40,6 +70,7 @@ const CampaignDetailPage = () => {
         if (!id) return;
 
         try {
+            setIsVoting(prev => ({ ...prev, [candidateId]: true }));
             // 3. Llamamos a la API para registrar el voto
             const response = await voteForCandidate(id, candidateId);
             setSuccess(response.message); // Mostramos el mensaje de éxito de la API
@@ -54,6 +85,8 @@ const CampaignDetailPage = () => {
             } else {
                 setError('Ocurrió un error inesperado al votar.');
             }
+        } finally {
+            setIsVoting(prev => ({ ...prev, [candidateId]: false }));
         }
     };
 
@@ -75,34 +108,81 @@ const CampaignDetailPage = () => {
             {success && <Alert variant="success" onClose={() => setSuccess('')} dismissible>{success}</Alert>}
             {error && <Alert variant="danger" onClose={() => setError('')} dismissible>{error}</Alert>}
 
-            <Card>
-                <Card.Header as="h2">{campaign!.titulo}</Card.Header>
+            <Card className="acrylic-card">
                 <Card.Body>
-                    <Card.Text>{campaign!.descripcion}</Card.Text>
-                    <hr />
-                    <h3>Candidatos</h3>
-                    <ListGroup>
-                        {campaign!.candidates && campaign!.candidates.map(candidate => (
-                            <ListGroup.Item key={candidate.id} className="d-flex justify-content-between align-items-center">
-                                {candidate.nombre}
-                                <span>
-                                    <strong>Votos: {candidate.voteCount}</strong>
-                                    <Button 
-                                        variant="success" 
-                                        className="ms-3" 
-                                        onClick={() => handleVote(candidate.id)}
-                                        disabled={campaign!.estado !== 'habilitada'}
-                                    >
-                                        Votar
-                                    </Button>
-                                </span>
-                            </ListGroup.Item>
-                        ))}
-                    </ListGroup>
+                    <div className="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <Card.Title as="h2" className="mb-1 campaign-title">{campaign!.titulo}</Card.Title>
+                            <Card.Subtitle className="text-muted">{campaign!.descripcion}</Card.Subtitle>
+                        </div>
+                        <div className="text-end">
+                            <div className="time-badge mb-2">{timeLeft === null ? 'calculando...' : (timeLeft > 0 ? `${Math.floor(timeLeft/3600)}h ${Math.floor((timeLeft%3600)/60)}m` : 'Finalizada')}</div>
+                            <div className="status-chip">{campaign!.estado}</div>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="mb-3 voters-section">
+                                <h5 className="mb-2">Votantes</h5>
+                                <p className="text-muted small">Lista de votantes y candidatos disponibles. Seleccione un candidato para emitir su voto.</p>
+
+                                <ListGroup className="vote-list">
+                                    {(campaign!.candidates || []).map(candidate => (
+                                        <ListGroup.Item key={candidate.id} className="vote-row d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <div className="candidate-name">{candidate.nombre}</div>
+                                                <div className="candidate-sub small text-muted">Votos: {candidate.voteCount}</div>
+                                            </div>
+                                            <div>
+                                                <Button
+                                                    variant="outline-light"
+                                                    className="vote-btn"
+                                                    onClick={() => handleVote(candidate.id)}
+                                                    disabled={campaign!.estado !== 'habilitada' || (timeLeft !== null && timeLeft <= 0) || !!isVoting[candidate.id]}
+                                                >
+                                                    {isVoting[candidate.id] ? (
+                                                        <>
+                                                            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />{' '}
+                                                            Votando...
+                                                        </>
+                                                    ) : (
+                                                        'Votar'
+                                                    )}
+                                                </Button>
+                                            </div>
+                                        </ListGroup.Item>
+                                    ))}
+                                </ListGroup>
+                            </div>
+                        </div>
+
+                        <div className="col-md-6">
+                            <div className="chart-wrap mb-3">
+                                <Bar
+                                    data={{
+                                        labels: (campaign!.candidates || []).map(c => c.nombre),
+                                        datasets: [
+                                            {
+                                                label: 'Votos',
+                                                data: (campaign!.candidates || []).map(c => c.voteCount),
+                                                backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                                            }
+                                        ]
+                                    }}
+                                    options={{
+                                        responsive: true,
+                                        plugins: {
+                                            legend: { display: false },
+                                            title: { display: true, text: 'Resultados actuales' }
+                                        }
+                                    }}
+                                />
+                            </div>
+                            {/* Estado mostrado arriba en el chip; bloque eliminado porque es redundante */}
+                        </div>
+                    </div>
                 </Card.Body>
-                <Card.Footer>
-                    <strong>Estado de la campaña:</strong> {campaign!.estado}
-                </Card.Footer>
             </Card>
         </Container>
     );

@@ -1,0 +1,196 @@
+@import './styles/_variables.scss';
+
+body {
+  color: $text;
+  /* Fondo blanco base con patrón de puntitos grises sutiles */
+  background-color: #ffffff;
+  background-image: radial-gradient(rgba(128,128,128,0.12) 1px, transparent 1px);
+  background-size: 10px 10px;
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+.container {
+  max-width: $max-width;
+  padding: $container-pad;
+}
+
+.card {
+  background: $card-bg;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+}
+
+.mt-5 {
+  margin-top: 3rem !important;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, $primary, darken($primary, 6%));
+  border-color: darken($primary, 8%);
+  color: #fff;
+  transition: background 200ms ease, transform 80ms ease;
+  box-shadow: 0 4px 12px rgba(13,110,253,0.12);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background: linear-gradient(180deg, lighten($primary, 4%), darken($primary, 10%));
+  transform: translateY(-1px);
+  border-color: darken($primary, 10%);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  background: linear-gradient(180deg, darken($primary, 2%), darken($primary, 12%));
+}
+
+.app-navbar {
+  background: linear-gradient(180deg, rgba(8,24,48,0.85), rgba(2,8,24,0.65)); /* azul marino translúcido */
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(6px);
+  .navbar-brand, .nav-link, .dropdown-toggle {
+    color: rgba(255,255,255,0.95) !important;
+  }
+  .nav-link {
+    opacity: 0.95;
+  }
+}
+
+/* Welcome label y animaciones para links */
+.welcome-label {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.welcome-text {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.8);
+  line-height: 1;
+}
+.welcome-name {
+  font-weight: 700;
+  color: #fff;
+  font-size: 1rem;
+  margin-top: 2px;
+  position: relative;
+}
+
+/* animated link: underline appears on hover with small move */
+.animated-link {
+  position: relative;
+  display: inline-block;
+  transition: transform 160ms ease, color 160ms ease;
+}
+.animated-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: rgba(255,255,255,0.0);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 180ms ease, background 180ms ease;
+}
+.animated-link:hover {
+  transform: translateY(-2px);
+  color: #fff !important;
+}
+.animated-link:hover::after {
+  transform: scaleX(1);
+  background: rgba(255,255,255,0.9);
+}
+
+/* underline for welcome-name on hover of the dropdown title */
+.welcome-label:hover .welcome-name::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 2px;
+  background: rgba(255,255,255,0.9);
+  transform: scaleX(1);
+}
+
+
+/* Capa de degradado: superior blanco claro -> inferior con ~28% gris */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.0) 0%, rgba(128,128,128,0.28) 100%);
+  mix-blend-mode: normal;
+  z-index: 0;
+}
+
+/* Asegurar que el contenido principal quede por encima del overlay */
+.App, .container, .card, .acrylic-card {
+  position: relative;
+  z-index: 1;
+}
+
+/* Acrylic card look */
+.acrylic-card {
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(8px) saturate(120%);
+  border: 1px solid rgba(255,255,255,0.45);
+  padding: 1rem;
+}
+
+.campaign-title {
+  font-weight: 700;
+}
+
+.time-badge {
+  background: rgba(255,255,255,0.08);
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  color: $text;
+  font-weight: 600;
+}
+
+.status-chip {
+  background: rgba(0,0,0,0.06);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.vote-list .vote-row {
+  background: rgba(255,255,255,0.3);
+  margin-bottom: 8px;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+}
+
+.vote-btn {
+  background: linear-gradient(180deg, rgba(13,110,253,0.12), rgba(13,110,253,0.06));
+  color: #fff;
+  border: 1px solid rgba(13,110,253,0.18);
+  transition: background 160ms ease, transform 80ms ease, box-shadow 160ms ease;
+  box-shadow: 0 2px 8px rgba(13,110,253,0.08);
+}
+
+.vote-btn:hover, .vote-btn:focus {
+  background: linear-gradient(180deg, rgba(13,110,253,0.18), rgba(13,110,253,0.08));
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(13,110,253,0.12);
+}
+
+.vote-btn:active {
+  transform: translateY(0);
+  background: linear-gradient(180deg, rgba(13,110,253,0.1), rgba(13,110,253,0.05));
+}
+
+.chart-wrap {
+  background: rgba(255,255,255,0.6);
+  padding: 0.8rem;
+  border-radius: 10px;
+}

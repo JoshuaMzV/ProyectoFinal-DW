@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Form, Button, Container, Row, Col, Card, Alert } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Card, Alert, Spinner } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 // 1. Importamos nuestra función de registro y el tipo de datos
 import { register, RegisterData } from '../services/authService';
 
@@ -16,6 +17,9 @@ const RegisterPage = () => {
     // Añadimos estados para manejar mensajes de éxito o error
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    // Estado para evitar doble envío
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
@@ -29,14 +33,15 @@ const RegisterPage = () => {
         e.preventDefault();
         setError('');
         setMessage('');
+    if (isSubmitting) return; // prevenir doble envío
+    setIsSubmitting(true);
 
         try {
             // 3. Llamamos a la función del servicio con los datos del formulario
             const response = await register(formData);
             setMessage(response.message); // Mostramos el mensaje de éxito de la API
-
-            // En un caso real, aquí redirigiríamos al usuario a la página de login
-            // e.g., navigate('/login');
+            // Redirigir a login tras un pequeño retardo para mostrar el mensaje
+            setTimeout(() => navigate('/login'), 1000);
 
         } catch (err: any) {
             // 4. Si la API devuelve un error, lo capturamos y mostramos
@@ -45,6 +50,8 @@ const RegisterPage = () => {
             } else {
                 setError('Ocurrió un error inesperado. Intente de nuevo.');
             }
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -87,8 +94,15 @@ const RegisterPage = () => {
                                     <Form.Control type="password" name="password" placeholder="Cree una contraseña segura" onChange={handleInputChange} required />
                                 </Form.Group>
                                 <div className="d-grid">
-                                    <Button variant="primary" type="submit">
-                                        Registrarse
+                                    <Button variant="primary" type="submit" disabled={isSubmitting}>
+                                        {isSubmitting ? (
+                                            <>
+                                                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                                                {' '}Registrando...
+                                            </>
+                                        ) : (
+                                            'Registrarse'
+                                        )}
                                     </Button>
                                 </div>
                             </Form>

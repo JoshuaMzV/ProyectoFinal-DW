@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+const DEFAULT_API = 'https://proyectofinal-dw.onrender.com/api';
 const apiClient = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+    baseURL: process.env.REACT_APP_API_URL || DEFAULT_API,
 });
 
 export interface RegisterData {
@@ -38,4 +39,10 @@ export const login = async (userData: LoginData) => {
 export const logout = () => {
     // Simplemente removemos el token del localStorage
     localStorage.removeItem('authToken');
+};
+
+// Obtiene el usuario actual usando el token en Authorization header
+export const getCurrentUser = async () => {
+    const response = await apiClient.get('/auth/me');
+    return response.data.user;
 };

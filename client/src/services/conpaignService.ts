@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 // Creamos una instancia de axios que usará la URL base de la API
+const DEFAULT_API = 'https://proyectofinal-dw.onrender.com/api';
 const apiClient = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+    baseURL: process.env.REACT_APP_API_URL || DEFAULT_API,
 });
 
 // Esto es muy importante: un "interceptor" que se ejecuta ANTES de cada petición.
@@ -14,6 +15,19 @@ apiClient.interceptors.request.use((config) => {
     }
     return config;
 });
+
+// Response interceptor: si recibimos 401/403, limpiamos el token local
+apiClient.interceptors.response.use(
+    (res) => res,
+    (err) => {
+        if (err.response && (err.response.status === 401 || err.response.status === 403)) {
+            localStorage.removeItem('authToken');
+            // Nota: no hacemos navigate aquí (no tenemos acceso a router),
+            // el AuthProvider detectará la ausencia del token en el siguiente render.
+        }
+        return Promise.reject(err);
+    }
+);
 
 // Definimos la estructura de una Campaña con TypeScript
 // Definimos la estructura de un Candidato
@@ -29,6 +43,9 @@ export interface Campaign {
     titulo: string;
     descripcion: string;
     estado: 'habilitada' | 'deshabilitada' | 'finalizada';
+    // Fechas en formato ISO (string) según backend
+    fecha_inicio?: string;
+    fecha_fin?: string;
     candidates?: Candidate[];
 }
 
