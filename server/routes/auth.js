@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken'); // <-- Asegúrate de tener esta línea
+const { protect } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
@@ -56,6 +57,53 @@ const createAuthRoutes = (pool) => {
             res.status(200).json({ token });
         } catch (error) {
             console.error('Error en el login:', error);
+            res.status(500).json({ message: 'Error en el servidor.' });
+        }
+    });
+
+    // --- Obtener mi información (protegido) ---
+    router.get('/me', protect, async (req, res) => {
+        try {
+            const sql = 'SELECT id, numero_colegiado, nombre_completo, email, dpi, fecha_nacimiento FROM votantes WHERE id = $1';
+            const result = await pool.query(sql, [req.user.id]);
+            if (result.rows.length === 0) return res.status(404).json({ message: 'Usuario no encontrado' });
+            res.json({ user: result.rows[0] });
+        } catch (error) {
+            console.error('Error en /auth/me:', error);
+            res.status(500).json({ message: 'Error en el servidor.' });
+        }
+    });
+
+    // --- Listar votantes (solo admins) ---
+    router.get('/votantes', protect, async (req, res) => {
+        try {
+            if (!req.user || req.user.rol !== 'admin') return res.status(403).json({ message: 'No autorizado' });
+            const sql = 'SELECT id, numero_colegiado, nombre_completo, email, dpi, fecha_nacimiento FROM votantes';
+            const result = await pool.query(sql);
+            res.json({ votantes: result.rows });
+        } catch (error) {
+            console.error('Error listando votantes:', error);
+            res.status(500).json({ message: 'Error en el servidor.' });
+        }
+    });
+
+    // --- Obtener votante por id (admin o dueño) ---
+    router.get('/votantes/:id', protect, async (req, res) => {
+        try {
+            const requestedId = parseInt(req.params.id, 10);
+            if (isNaN(requestedId)) return res.status(400).json({ message: 'ID inválido' });
+            // Si no es admin, sólo puede ver su propia información
+            if (!req.user) return res.status(401).json({ message: 'No autorizado' });
+            // Coercion segura: req.user.id podría venir como string desde el token
+            const tokenUserId = Number(req.user.id);
+            if (req.user.rol !== 'admin' && tokenUserId !== requestedId) return res.status(403).json({ message: 'No autorizado' });
+
+            const sql = 'SELECT id, numero_colegiado, nombre_completo, email, dpi, fecha_nacimiento FROM votantes WHERE id = $1';
+            const result = await pool.query(sql, [requestedId]);
+            if (result.rows.length === 0) return res.status(404).json({ message: 'Usuario no encontrado' });
+            res.json({ votante: result.rows[0] });
+        } catch (error) {
+            console.error('Error obteniendo votante por id:', error);
             res.status(500).json({ message: 'Error en el servidor.' });
         }
     });

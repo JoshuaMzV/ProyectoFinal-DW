@@ -28,8 +28,35 @@ const createAdminsRoutes = (pool) => {
 
             // Si se inició por numero_colegiado, además verificamos dpi y fecha
             if (!username) {
-                const dbDate = admin.fecha_nacimiento ? new Date(admin.fecha_nacimiento).toISOString().split('T')[0] : null;
-                if (admin.dpi !== dpi || dbDate !== fecha_nacimiento) return res.status(401).json({ message: 'Credenciales inválidas.' });
+                // Depuración: mostrar valores para entender fallos
+                console.debug('Admin login check - db values:', {
+                    db_dpi: admin.dpi,
+                    db_fecha: admin.fecha_nacimiento
+                });
+                console.debug('Admin login check - request values:', { dpi, fecha_nacimiento });
+
+                // Normalizar DPI: quitar todo lo que no sea dígito para comparar
+                const normalizeDpi = (s) => s ? String(s).replace(/\D/g, '') : '';
+                const dbDpiNorm = normalizeDpi(admin.dpi);
+                const reqDpiNorm = normalizeDpi(dpi);
+
+                // Normalizar fechas a YYYY-MM-DD (aceptamos ISO/UTC o YYYY-MM-DD)
+                const toDateKey = (v) => {
+                    if (!v) return null;
+                    try {
+                        const d = new Date(v);
+                        if (isNaN(d.getTime())) return null;
+                        return d.toISOString().split('T')[0];
+                    } catch (e) { return null; }
+                };
+                const dbDate = toDateKey(admin.fecha_nacimiento);
+                const reqDate = toDateKey(fecha_nacimiento);
+
+                console.debug('Normalized comparison:', { dbDpiNorm, reqDpiNorm, dbDate, reqDate });
+
+                if (dbDpiNorm !== reqDpiNorm || dbDate !== reqDate) {
+                    return res.status(401).json({ message: 'Credenciales inválidas.' });
+                }
             }
 
             const isMatch = await bcrypt.compare(password, admin.password);
