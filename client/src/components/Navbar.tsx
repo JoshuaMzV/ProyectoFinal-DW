@@ -26,6 +26,9 @@ const AppNavbar = () => {
                                     <span className="welcome-name"> {user.nombre ? user.nombre.split(' ')[0] : ''} {user.apellido ? user.apellido.split(' ')[0] : ''}</span>
                                 </span>
                             } id="basic-nav-dropdown">
+                                {user.rol === 'admin' && (
+                                    <NavDropdown.Item as={Link} to="/admin">Panel Admin</NavDropdown.Item>
+                                )}
                                 <NavDropdown.Item onClick={handleLogout}>
                                     Cerrar Sesión
                                 </NavDropdown.Item>

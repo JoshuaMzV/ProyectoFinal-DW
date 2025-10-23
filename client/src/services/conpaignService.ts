@@ -67,3 +67,17 @@ export const voteForCandidate = async (campaignId: string, candidateId: number) 
     const response = await apiClient.post(`/campaigns/${campaignId}/vote`, { candidatoId: candidateId });
     return response.data;
 };
+
+// --- NUEVO: Crear una campaña (admin) ---
+export interface CreateCampaignData {
+    titulo: string;
+    descripcion?: string;
+    fecha_inicio?: string;
+    fecha_fin?: string;
+    cantidad_votos?: number;
+}
+
+export const createCampaign = async (data: CreateCampaignData) => {
+    const response = await apiClient.post('/campaigns', data);
+    return response.data;
+};

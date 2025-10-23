@@ -25,14 +25,19 @@ export const register = async (userData: RegisterData) => {
 
 // --- NUEVO: Función para iniciar sesión ---
 export const login = async (userData: LoginData) => {
-    const response = await apiClient.post('/auth/login', userData);
-
-    // Si la respuesta contiene un token, lo guardamos en el localStorage del navegador
-    if (response.data.token) {
-        localStorage.setItem('authToken', response.data.token);
+    try {
+        const response = await apiClient.post('/auth/login', userData);
+        if (response.data.token) localStorage.setItem('authToken', response.data.token);
+        return response.data;
+    } catch (err: any) {
+        // Si la respuesta fue 401 (no encontrado en votantes), intentamos login de admins
+        if (err.response && err.response.status === 401) {
+            const adminResp = await apiClient.post('/admins/login', userData);
+            if (adminResp.data.token) localStorage.setItem('authToken', adminResp.data.token);
+            return adminResp.data;
+        }
+        throw err;
     }
-
-    return response.data;
 };
 
 // --- NUEVO: Función para cerrar sesión ---
