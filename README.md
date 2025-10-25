@@ -13,7 +13,7 @@ Este repositorio contiene el proyecto completo del sistema de votaciones: fronte
 ## Archivos de documentación (enlaces)
 
 - Diseño y sistema de diseño
-  - `README_SISTEMA_DISEÑO.md` - Descripción completa del sistema de diseño
+  - `[README_SISTEMA_DISEÑO.md]` - Descripción completa del sistema de diseño
   - `DESIGN_SYSTEM_SUMMARY.md` - Resumen ejecutivo del sistema de diseño
   - `DESIGN_SYSTEM_VISUAL.md` - Guía visual
   - `client/src/styles/DESIGN_SYSTEM.md` - Documentación técnica (dentro de `client`)
@@ -105,8 +105,9 @@ He revisado los archivos de documentación principales (sistema de diseño y gu�
 
 ## Contacto
 
-Si quieres que edite o mejore algún documento en particular (por ejemplo corregir redacción, añadir imágenes, o un índice), dime cuál y lo actualizo.
+Joshua Ivan Andre Mendez Vasquez 9490-22-4032
 
 ---
 
-Pequeña nota: si quieres que además genere un `README.md` más visual con badges, capturas o una sección de “Try it” con comandos automáticos, lo hago en la siguiente iteración.
+Netlify: https://proyectofinal-dw.netlify.app/
+Render: https://proyectofinal-dw.onrender.com
