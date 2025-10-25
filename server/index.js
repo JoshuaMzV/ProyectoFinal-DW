@@ -25,10 +25,12 @@ const pool = new Pool({
 
 app.use(express.json());
 
-// Configuración de CORS: permitir la URL del frontend (localhost en desarrollo)
+// Configuración de CORS: permitir múltiples orígenes
 const allowedOrigins = [
-    process.env.FRONTEND_URL || 'http://localhost:3000'
-];
+    'http://localhost:3000',
+    'https://proyectofinal-dw.netlify.app',
+    process.env.FRONTEND_URL
+].filter(Boolean); // Eliminar undefined/null
 
 const corsOptions = {
     origin: function (origin, callback) {
