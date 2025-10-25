@@ -36,6 +36,7 @@ const AdminPanel = () => {
 
     // Estado: listar votantes (para agregar candidato desde usuario existente)
     const [voters, setVoters] = useState<any[]>([]);
+    const [showVotersModal, setShowVotersModal] = useState(false);
 
     // Estado: listar todos los candidatos del sistema
     const [allCandidates, setAllCandidates] = useState<any[]>([]);
