@@ -1,9 +1,5 @@
 /*
-  Content-Security-Policy: default-src 'self';
-    script-src 'self' 'unsafe-inline' blob:;
-    script-src-elem 'self' 'unsafe-inline' blob:;
-  connect-src 'self' http://localhost:3000 http://localhost:5000 https:;
-    img-src 'self' data: blob:;
-    style-src 'self' 'unsafe-inline';
-    font-src 'self' data:;
-    frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; script-src-elem 'self' 'unsafe-inline' blob:; connect-src 'self' https://proyectofinal-dw.onrender.com http://localhost:5000 https:; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-ancestors 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
