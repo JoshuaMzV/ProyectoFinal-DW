@@ -1,0 +1,448 @@
+@import '../variables';
+
+// ===================================
+// REGISTER PAGE STYLES
+// ===================================
+
+.register-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+  padding: $spacing-3xl $lg;
+  position: relative;
+  overflow: hidden;
+
+  // Animated background elements
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: $radius-full;
+    background: radial-gradient(circle, rgba($primary-gold, 0.08) 0%, transparent 70%);
+    animation: float 25s ease-in-out infinite;
+  }
+
+  &::before {
+    width: 500px;
+    height: 500px;
+    top: -150px;
+    left: -150px;
+  }
+
+  &::after {
+    width: 400px;
+    height: 400px;
+    bottom: -100px;
+    right: -100px;
+    animation-delay: 3s;
+  }
+}
+
+.register-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.register-card {
+  background: $white;
+  border-radius: $radius-xl;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  animation: slideInScale $transition-slow;
+
+  // Top accent bar
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $primary-gold 0%, $primary-gold-light 100%);
+    z-index: 1;
+  }
+}
+
+.register-header {
+  background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+  color: $white;
+  padding: $spacing-2xl;
+  text-align: center;
+  border-bottom: 2px solid $primary-gold;
+
+  h1 {
+    color: $white;
+    margin: 0 0 $sm;
+    font-size: $fs-2xl;
+  }
+
+  .subtitle {
+    color: rgba($white, 0.9);
+    font-size: $fs-sm;
+    margin: 0;
+  }
+}
+
+.register-body {
+  padding: $spacing-2xl;
+}
+
+.register-form {
+  .step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $spacing-2xl;
+    gap: $md;
+
+    .step {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: $md;
+
+      .step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: $radius-full;
+        background: $secondary-light;
+        color: $primary-dark;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: $fw-bold;
+        border: 2px solid $primary-gold;
+        flex-shrink: 0;
+        transition: all $transition-base;
+      }
+
+      .step-label {
+        font-size: $fs-sm;
+        font-weight: $fw-semibold;
+        color: $dark-gray;
+        display: none;
+
+        @media (min-width: $breakpoint-md) {
+          display: block;
+        }
+      }
+
+      &.active .step-number {
+        background: $primary-gold;
+        color: $white;
+      }
+
+      &.completed .step-number {
+        background: $success;
+        color: $white;
+        border-color: $success;
+      }
+    }
+  }
+
+  .form-section {
+    margin-bottom: $spacing-2xl;
+
+    .section-title {
+      font-size: $fs-lg;
+      font-weight: $fw-bold;
+      color: $primary-dark;
+      margin-bottom: $lg;
+      padding-bottom: $lg;
+      border-bottom: 2px solid $secondary-border;
+      display: flex;
+      align-items: center;
+      gap: $md;
+
+      .icon {
+        color: $primary-gold;
+        font-size: $fs-xl;
+      }
+    }
+  }
+
+  .form-group {
+    margin-bottom: $xl;
+
+    label {
+      display: block;
+      font-weight: $fw-semibold;
+      color: $primary-dark;
+      font-size: $fs-sm;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: $sm;
+      display: flex;
+      align-items: center;
+      gap: $sm;
+
+      .required {
+        color: $danger;
+      }
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: $md $lg;
+      border: 2px solid $secondary-border;
+      border-radius: $radius-md;
+      font-family: $font-family-base;
+      font-size: $fs-base;
+      transition: all $transition-base;
+      background-color: $white;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-gold;
+        box-shadow: 0 0 0 3px rgba($primary-gold, 0.1);
+        background-color: rgba($primary-gold, 0.02);
+      }
+
+      &::placeholder {
+        color: $gray;
+      }
+
+      &:disabled {
+        background-color: $light-gray;
+        color: $gray;
+        cursor: not-allowed;
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-hint {
+      font-size: $fs-xs;
+      color: $gray;
+      margin-top: $sm;
+      font-style: italic;
+    }
+
+    .form-error {
+      color: $danger;
+      font-size: $fs-sm;
+      margin-top: $sm;
+      display: flex;
+      align-items: center;
+      gap: $sm;
+
+      &::before {
+        content: '✕';
+        font-weight: bold;
+      }
+    }
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $lg;
+  }
+
+  .auto-generated-field {
+    background: $light-gray;
+    border: 2px dashed $secondary-border;
+
+    input {
+      background: $light-gray;
+      cursor: not-allowed;
+
+      &:focus {
+        border-color: $secondary-border;
+        box-shadow: none;
+      }
+    }
+
+    .generated-badge {
+      display: inline-block;
+      background: $primary-gold;
+      color: $white;
+      padding: $xs $md;
+      border-radius: $radius-sm;
+      font-size: $fs-xs;
+      font-weight: $fw-bold;
+      margin-top: $sm;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.register-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $lg;
+  margin-top: $spacing-2xl;
+  padding-top: $spacing-2xl;
+  border-top: 1px solid $secondary-border;
+
+  .login-link {
+    font-size: $fs-sm;
+    color: $gray;
+
+    a {
+      color: $primary-gold;
+      font-weight: $fw-semibold;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .button-group {
+    display: flex;
+    gap: $lg;
+
+    button {
+      padding: $md $spacing-2xl;
+      border: none;
+      border-radius: $radius-md;
+      font-weight: $fw-bold;
+      cursor: pointer;
+      transition: all $transition-base;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      &.btn-submit {
+        background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+        color: $white;
+        box-shadow: $shadow-md;
+
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: $shadow-lg;
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+
+      &.btn-reset {
+        background: transparent;
+        color: $primary-dark;
+        border: 2px solid $primary-dark;
+
+        &:hover {
+          background: $primary-dark;
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+.success-message {
+  background: linear-gradient(135deg, rgba($success, 0.1) 0%, rgba($success, 0.05) 100%);
+  border: 2px solid $success;
+  border-left: 4px solid $success;
+  color: darken($success, 20%);
+  padding: $lg;
+  border-radius: $radius-md;
+  margin-bottom: $lg;
+  animation: slideIn $transition-base;
+
+  .icon {
+    color: $success;
+    font-weight: bold;
+    margin-right: $sm;
+  }
+}
+
+.error-message {
+  background: linear-gradient(135deg, rgba($danger, 0.1) 0%, rgba($danger, 0.05) 100%);
+  border: 2px solid $danger;
+  border-left: 4px solid $danger;
+  color: darken($danger, 20%);
+  padding: $lg;
+  border-radius: $radius-md;
+  margin-bottom: $lg;
+  animation: slideIn $transition-base;
+
+  .icon {
+    color: $danger;
+    font-weight: bold;
+    margin-right: $sm;
+  }
+}
+
+// ===================================
+// ANIMATIONS
+// ===================================
+
+@keyframes slideInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+}
+
+// ===================================
+// RESPONSIVE
+// ===================================
+
+@media (max-width: $breakpoint-md) {
+  .register-container {
+    padding: $xl $md;
+  }
+
+  .register-header {
+    padding: $xl;
+
+    h1 {
+      font-size: $fs-xl;
+    }
+  }
+
+  .register-body {
+    padding: $xl;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .register-footer {
+    flex-direction: column;
+    align-items: stretch;
+
+    .button-group {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

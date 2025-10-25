@@ -1,8 +1,10 @@
 import axios from 'axios';
 
 // Creamos una instancia de axios que usará la URL base de la API
+// REACT_APP_API_URL ya incluye /api, así que no lo agregamos de nuevo
+const apiBase = (process.env.REACT_APP_API_URL || 'http://localhost:5000/api').replace(/\/$/, '');
 const apiClient = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+    baseURL: apiBase,
 });
 
 // Esto es muy importante: un "interceptor" que se ejecuta ANTES de cada petición.
@@ -29,6 +31,8 @@ export interface Campaign {
     titulo: string;
     descripcion: string;
     estado: 'habilitada' | 'deshabilitada' | 'finalizada';
+    fecha_inicio?: string;
+    fecha_fin?: string;
     candidates?: Candidate[];
 }
 
@@ -48,5 +52,11 @@ export const getCampaignById = async (id: string): Promise<Campaign> => {
 export const voteForCandidate = async (campaignId: string, candidateId: number) => {
     // En el backend esperamos { candidatoId: number }
     const response = await apiClient.post(`/campaigns/${campaignId}/vote`, { candidatoId: candidateId });
+    return response.data;
+};
+
+// --- NUEVO: Función para eliminar una campaña ---
+export const deleteCampaign = async (campaignId: number) => {
+    const response = await apiClient.delete(`/campaigns/${campaignId}`);
     return response.data;
 };

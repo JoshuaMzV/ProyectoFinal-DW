@@ -1,0 +1,215 @@
+@import '../_variables';
+
+// ===================================
+// CANDIDATES MANAGEMENT STYLES
+// ===================================
+
+.candidates-management {
+  .management-card {
+    box-shadow: $shadow-lg;
+    border: none;
+    border-radius: $radius-lg;
+    overflow: hidden;
+
+    .management-header {
+      background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+      border-bottom: 4px solid $primary-gold;
+      padding: $spacing-2xl;
+
+      h2 {
+        color: $white !important;
+        font-weight: $fw-bold;
+        margin: 0 !important;
+        display: flex;
+        align-items: center;
+        gap: $md;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .table-responsive {
+      margin-top: $xl;
+    }
+  }
+
+  .candidates-table {
+    border-collapse: collapse;
+    background: $white;
+
+    thead {
+      background: #f8f9fa;
+      border-bottom: 2px solid $primary-gold;
+
+      th {
+        color: $primary-dark;
+        font-weight: $fw-bold;
+        padding: $lg;
+        text-transform: uppercase;
+        font-size: $fs-sm;
+        letter-spacing: 0.5px;
+        border: none;
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid $secondary-border;
+        transition: all $transition-base;
+
+        &:hover {
+          background: rgba($primary-gold, 0.05);
+        }
+
+        td {
+          padding: $lg;
+          color: $dark-gray;
+          vertical-align: middle;
+
+          &.candidate-name {
+            font-weight: $fw-semibold;
+            color: $primary-dark;
+          }
+        }
+
+        .badge {
+          padding: $sm $md;
+          font-size: $fs-xs;
+          font-weight: $fw-bold;
+        }
+
+        .btn {
+          font-weight: $fw-bold;
+          border-radius: $radius-md;
+          transition: all $transition-base;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-size: $fs-xs;
+
+          &.btn-danger {
+            background: $danger;
+            border-color: $danger;
+            color: $white;
+
+            &:hover:not(:disabled) {
+              background: darken($danger, 10%);
+              border-color: darken($danger, 10%);
+              transform: translateY(-2px);
+              box-shadow: $shadow-lg;
+            }
+
+            &:disabled {
+              opacity: 0.6;
+              cursor: not-allowed;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ===================================
+  // MODAL STYLES
+  // ===================================
+  .management-modal-header {
+    background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+    border-bottom: 3px solid $primary-gold;
+    color: $white;
+
+    .modal-title {
+      color: $white;
+      font-weight: $fw-bold;
+      font-size: $fs-xl;
+    }
+
+    .btn-close {
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  .management-modal-body {
+    padding: $spacing-2xl;
+
+    .form-label {
+      color: $primary-dark;
+      font-weight: $fw-bold;
+      margin-bottom: $md;
+    }
+
+    .form-control-lg,
+    .form-select {
+      border-color: $secondary-border;
+      border-radius: $radius-md;
+      padding: $md $lg;
+      font-size: $fs-base;
+      transition: all $transition-base;
+
+      &:focus {
+        border-color: $primary-gold;
+        box-shadow: 0 0 0 0.2rem rgba($primary-gold, 0.25);
+      }
+    }
+  }
+
+  // ===================================
+  // BUTTONS
+  // ===================================
+  .btn {
+    font-weight: $fw-bold;
+    border-radius: $radius-md;
+    transition: all $transition-base;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    &.btn-success {
+      background: $success;
+      border-color: $success;
+      color: $white;
+
+      &:hover:not(:disabled) {
+        background: darken($success, 10%);
+        border-color: darken($success, 10%);
+        transform: translateY(-2px);
+        box-shadow: $shadow-lg;
+      }
+    }
+
+    &.btn-secondary {
+      background: $gray;
+      border-color: $gray;
+      color: $white;
+
+      &:hover:not(:disabled) {
+        background: darken($gray, 10%);
+        border-color: darken($gray, 10%);
+      }
+    }
+  }
+}
+
+// ===================================
+// RESPONSIVE
+// ===================================
+
+@media (max-width: $breakpoint-md) {
+  .candidates-management {
+    .management-header {
+      padding: $lg;
+
+      h2 {
+        font-size: $fs-lg;
+      }
+    }
+
+    .candidates-table {
+      thead th {
+        padding: $md;
+        font-size: 10px;
+      }
+
+      tbody td {
+        padding: $md;
+        font-size: $fs-sm;
+      }
+    }
+  }
+}

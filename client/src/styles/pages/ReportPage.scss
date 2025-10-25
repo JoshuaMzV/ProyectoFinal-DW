@@ -1,0 +1,150 @@
+@import '../_variables';
+
+.report-page {
+    .report-card {
+        box-shadow: $shadow-xl;
+        border: none;
+        border-radius: $radius-lg;
+        overflow: hidden;
+    }
+
+    .report-header {
+        background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+        color: $white;
+        padding: $lg;
+        border-bottom: 3px solid $primary-gold;
+
+        h2 {
+            color: $white;
+            font-weight: $fw-bold;
+        }
+    }
+
+    .report-actions {
+        background: rgba($primary-gold, 0.1);
+        padding: $lg;
+        border-radius: $radius-md;
+        border-left: 4px solid $primary-gold;
+
+        h5 {
+            color: $primary-dark;
+            font-weight: $fw-bold;
+            margin-bottom: $md;
+        }
+
+        .btn {
+            margin-right: $md;
+            font-weight: $fw-medium;
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: $shadow-lg;
+            }
+        }
+    }
+
+    .report-table {
+        background: $white;
+
+        .table-header {
+            background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+            color: $white;
+
+            th {
+                color: $white;
+                font-weight: $fw-bold;
+                text-align: center;
+                padding: $md;
+                border-color: $primary-gold;
+            }
+        }
+
+        tbody tr {
+            transition: all $transition-base;
+            border-bottom: 1px solid #f0f0f0;
+
+            &:hover {
+                background-color: rgba($primary-gold, 0.05);
+                transform: scale(1.01);
+            }
+
+            td {
+                padding: $md;
+                vertical-align: middle;
+
+                .badge {
+                    font-size: $fs-sm;
+                    padding: $sm $md;
+                }
+
+                .text-primary {
+                    font-size: $fs-lg;
+                    font-weight: $fw-bold;
+                }
+            }
+        }
+    }
+
+    .statistics {
+        .stat-card {
+            border: none;
+            border-radius: $radius-md;
+            box-shadow: $shadow-md;
+            transition: all $transition-base;
+            border-top: 4px solid $primary-gold;
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: $shadow-xl;
+                border-top-color: $primary-gold-light;
+            }
+
+            .stat-number {
+                color: $primary-dark;
+                font-weight: $fw-bold;
+                font-size: $fs-3xl;
+                margin: $md 0;
+            }
+
+            .stat-label {
+                color: $gray;
+                font-size: $fs-sm;
+                font-weight: $fw-medium;
+                margin: 0;
+            }
+        }
+    }
+}
+
+// Estilos de impresión
+@media print {
+    .report-page {
+        .report-actions,
+        .btn-group {
+            display: none;
+        }
+
+        .report-table {
+            font-size: 10px;
+
+            .table-header th {
+                background-color: $primary-dark !important;
+                color: $white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            tbody tr:nth-child(odd) {
+                background-color: #f9f9f9;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        .statistics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: $md;
+        }
+    }
+}

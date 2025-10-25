@@ -1,0 +1,482 @@
+@import '../_variables';
+
+// ===================================
+// VOTER DASHBOARD STYLES
+// ===================================
+
+.voter-dashboard {
+  padding: $spacing-3xl $lg;
+
+  .page-title {
+    font-size: $fs-4xl;
+    font-weight: $fw-bold;
+    color: $white;
+    background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+    margin-bottom: $xl;
+    padding: $xl $spacing-2xl;
+    border-bottom: 4px solid $primary-gold;
+    border-radius: $radius-lg;
+    display: flex;
+    align-items: center;
+    gap: $md;
+    box-shadow: $shadow-lg;
+
+    &::before {
+      content: '🗳️';
+      font-size: $fs-3xl;
+    }
+  }
+
+  .welcome-section {
+    font-size: $fs-lg;
+    color: $dark-gray;
+    margin-bottom: $spacing-2xl;
+
+    strong {
+      color: $primary-dark;
+      font-weight: $fw-bold;
+      background: rgba($primary-gold, 0.1);
+      padding: $sm $md;
+      border-radius: $radius-md;
+      display: inline-block;
+    }
+  }
+
+  .campaign-card {
+    background: $white;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    box-shadow: $shadow-md;
+    transition: all $transition-base;
+    margin-bottom: $spacing-2xl;
+    border: 1px solid $secondary-border;
+
+    &:hover {
+      box-shadow: $shadow-xl;
+      transform: translateY(-4px);
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+      color: $white;
+      padding: $lg;
+      border-bottom: 3px solid $primary-gold;
+
+      h5 {
+        color: $white !important;
+        font-weight: $fw-bold;
+        font-size: $fs-xl;
+        margin: 0 !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .campaign-header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: $lg;
+
+        .campaign-info {
+          flex: 1;
+
+          .campaign-title {
+            font-size: $fs-xl;
+            font-weight: $fw-bold;
+            color: $white;
+            margin: 0 0 $md;
+
+            &::before {
+              content: '📋 ';
+            }
+          }
+
+          .time-counter {
+            display: inline-block;
+            background: rgba($primary-gold, 0.2);
+            color: $primary-gold;
+            padding: $sm $md;
+            border-radius: $radius-md;
+            font-weight: $fw-semibold;
+            font-size: $fs-sm;
+
+            &.active {
+              background: rgba($success, 0.2);
+              color: $success;
+            }
+
+            &.ending {
+              background: rgba($warning, 0.2);
+              color: $warning;
+            }
+
+            &.ended {
+              background: rgba($danger, 0.2);
+              color: $danger;
+            }
+          }
+        }
+
+        .status-badge {
+          white-space: nowrap;
+          padding: $sm $lg;
+          border-radius: $radius-full;
+          font-size: $fs-xs;
+          font-weight: $fw-bold;
+          text-transform: uppercase;
+
+          &.bg-success {
+            background: $success !important;
+            color: $white;
+          }
+
+          &.bg-warning {
+            background: $warning !important;
+            color: $white;
+          }
+
+          &.bg-danger {
+            background: $danger !important;
+            color: $white;
+          }
+        }
+      }
+    }
+
+    .card-body {
+      padding: $spacing-2xl;
+
+      .description-section {
+        margin-bottom: $xl;
+
+        .description-label {
+          font-weight: $fw-bold;
+          color: $primary-dark;
+          font-size: $fs-sm;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: $sm;
+
+          &::before {
+            content: '📝 ';
+            margin-right: $sm;
+          }
+        }
+
+        .description-text {
+          color: $dark-gray;
+          line-height: $lh-relaxed;
+          padding: $md;
+          background: $light-gray;
+          border-left: 3px solid $primary-gold;
+          border-radius: $radius-md;
+        }
+      }
+
+      .candidates-section {
+        .candidates-label {
+          font-weight: $fw-bold;
+          color: $primary-dark;
+          font-size: $fs-sm;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: $lg;
+          display: flex;
+          align-items: center;
+          gap: $sm;
+
+          &::before {
+            content: '👥';
+          }
+        }
+
+        .candidate-item {
+          background: $light-gray;
+          padding: $lg;
+          margin-bottom: $lg;
+          border-radius: $radius-md;
+          border-left: 4px solid $primary-gold;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          transition: all $transition-base;
+
+          &:hover {
+            background: rgba($primary-gold, 0.05);
+            transform: translateX(4px);
+          }
+
+          .candidate-info {
+            flex: 1;
+
+            .candidate-name {
+              font-size: $fs-lg;
+              font-weight: $fw-bold;
+              color: $primary-dark;
+              margin: 0;
+              display: flex;
+              align-items: center;
+              gap: $sm;
+
+              &::before {
+                content: '👤';
+              }
+            }
+
+            .candidate-votes {
+              font-size: $fs-sm;
+              color: $gray;
+              margin: $sm 0 0;
+
+              .vote-count {
+                font-weight: $fw-bold;
+                color: $primary-gold;
+              }
+            }
+          }
+
+          .vote-button {
+            padding: $md $xl;
+            background: $success;
+            color: $white;
+            border: none;
+            border-radius: $radius-md;
+            font-weight: $fw-bold;
+            cursor: pointer;
+            transition: all $transition-base;
+            white-space: nowrap;
+            margin-left: $lg;
+            text-transform: uppercase;
+            font-size: $fs-sm;
+            letter-spacing: 0.5px;
+
+            &:hover:not(:disabled) {
+              background: darken($success, 10%);
+              transform: translateY(-2px);
+              box-shadow: $shadow-lg;
+            }
+
+            &:disabled {
+              background: $gray;
+              cursor: not-allowed;
+              opacity: 0.6;
+            }
+
+            &.voted {
+              background: $primary-gold;
+              pointer-events: none;
+
+              &::before {
+                content: '✓ ';
+                margin-right: $sm;
+              }
+            }
+          }
+        }
+
+        .no-candidates {
+          text-align: center;
+          padding: $spacing-2xl;
+          color: $gray;
+          background: $light-gray;
+          border-radius: $radius-md;
+          font-size: $fs-sm;
+
+          &::before {
+            content: '📭 ';
+            margin-right: $sm;
+          }
+        }
+      }
+    }
+  }
+
+  .loading-spinner {
+    text-align: center;
+    padding: $spacing-3xl;
+
+    .spinner {
+      color: $primary-dark;
+      margin-bottom: $lg;
+    }
+
+    p {
+      color: $gray;
+      font-size: $fs-lg;
+    }
+  }
+
+  .empty-state {
+    background: rgba($info, 0.1);
+    border: 2px solid $info;
+    border-left: 4px solid $info;
+    color: $info;
+    padding: $spacing-2xl;
+    border-radius: $radius-lg;
+    text-align: center;
+    margin: $spacing-3xl 0;
+
+    &::before {
+      content: 'ℹ ';
+      font-weight: bold;
+    }
+  }
+
+  // ===================================
+  // BUTTON STYLES
+  // ===================================
+  .btn {
+    font-weight: $fw-bold;
+    border-radius: $radius-md;
+    transition: all $transition-base;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: $fs-sm;
+
+    &.btn-success {
+      background: $success;
+      border-color: $success;
+      color: $white;
+
+      &:hover:not(:disabled) {
+        background: darken($success, 10%);
+        border-color: darken($success, 10%);
+        transform: translateY(-2px);
+        box-shadow: $shadow-lg;
+      }
+
+      &:disabled {
+        background: $gray;
+        border-color: $gray;
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+    }
+
+    &.btn-primary {
+      background: $primary-dark;
+      border-color: $primary-dark;
+      color: $white;
+
+      &:hover:not(:disabled) {
+        background: $primary-navy;
+        border-color: $primary-navy;
+        transform: translateY(-2px);
+        box-shadow: $shadow-lg;
+      }
+    }
+
+    &.btn-outline-primary {
+      color: $primary-dark;
+      border-color: $primary-dark;
+
+      &:hover:not(:disabled) {
+        background: $primary-dark;
+        border-color: $primary-dark;
+        color: $white;
+      }
+    }
+  }
+
+  // ===================================
+  // LIST GROUP STYLES
+  // ===================================
+  .list-group-item {
+    border-color: $secondary-border;
+    background: $light-gray;
+    transition: all $transition-base;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:hover {
+      background: rgba($primary-gold, 0.05);
+    }
+
+    strong {
+      color: $primary-dark;
+      font-weight: $fw-bold;
+    }
+
+    .text-muted {
+      color: $gray !important;
+    }
+  }
+
+  // ===================================
+  // BADGE STYLES
+  // ===================================
+  .badge {
+    padding: $sm $lg;
+    font-weight: $fw-bold;
+    text-transform: uppercase;
+    font-size: $fs-xs;
+
+    &.bg-success {
+      background: $success !important;
+      color: $white;
+    }
+
+    &.bg-warning {
+      background: $warning !important;
+      color: $white;
+    }
+
+    &.bg-danger {
+      background: $danger !important;
+      color: $white;
+    }
+
+    &.bg-info {
+      background: $info !important;
+      color: $white;
+    }
+  }
+}
+
+// ===================================
+// RESPONSIVE
+// ===================================
+
+@media (max-width: $breakpoint-md) {
+  .voter-dashboard {
+    padding: $xl $md;
+
+    .page-title {
+      font-size: $fs-2xl;
+      gap: $sm;
+
+      &::before {
+        font-size: $fs-2xl;
+      }
+    }
+
+    .campaign-card {
+      .card-header {
+        .campaign-header-content {
+          flex-direction: column;
+          gap: $md;
+
+          .status-badge {
+            width: 100%;
+            text-align: center;
+          }
+        }
+      }
+
+      .card-body {
+        padding: $xl;
+
+        .candidate-item {
+          flex-direction: column;
+          align-items: flex-start;
+
+          .vote-button {
+            width: 100%;
+            margin-left: 0;
+            margin-top: $md;
+          }
+        }
+      }
+    }
+  }
+}

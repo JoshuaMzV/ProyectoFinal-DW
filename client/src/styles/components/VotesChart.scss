@@ -1,0 +1,42 @@
+@import '../_variables';
+
+.chart-card {
+    border: none;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-md;
+    border-top: 3px solid $primary-gold;
+    transition: all $transition-base;
+
+    &:hover {
+        box-shadow: $shadow-xl;
+        transform: translateY(-2px);
+    }
+
+    .card-body {
+        padding: $lg;
+        background: linear-gradient(135deg, rgba($primary-dark, 0.02) 0%, rgba($primary-gold, 0.02) 100%);
+
+        canvas {
+            max-height: 400px;
+        }
+    }
+
+    .text-muted {
+        color: $gray;
+        font-size: $fs-sm;
+        font-weight: $fw-medium;
+    }
+}
+
+// Responsive para gráficos
+@media (max-width: $breakpoint-md) {
+    .chart-card {
+        .card-body {
+            padding: $md;
+
+            canvas {
+                max-height: 300px;
+            }
+        }
+    }
+}

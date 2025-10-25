@@ -1,0 +1,59 @@
+@import '../_variables';
+
+// ===================================
+// FOOTER STYLES - STICKY FOOTER
+// ===================================
+
+.footer {
+  background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+  color: $white;
+  padding: $lg $md;
+  margin-top: auto; // Empuja el footer al fondo
+  border-top: 4px solid $primary-gold;
+  flex-shrink: 0; // Previene que el footer se encoja
+  width: 100%;
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .footer-main {
+    margin-bottom: $md;
+
+    .footer-copyright {
+      font-size: $fs-xs;
+      font-weight: $fw-semibold;
+      margin: 0 0 $sm;
+      letter-spacing: 0.5px;
+      line-height: $lh-normal;
+      color: $white;
+    }
+
+    .footer-title {
+      font-size: 11px;
+      font-weight: $fw-bold;
+      margin: 0;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      line-height: $lh-normal;
+      color: $primary-gold;
+
+      strong {
+        color: $white;
+        display: inline;
+        margin-left: $sm;
+      }
+    }
+  }
+
+  .footer-divider {
+    width: 60px;
+    height: 2px;
+    background: $primary-gold;
+    margin: $md auto 0;
+    border-radius: 1px;
+  }
+}
+

@@ -9,15 +9,17 @@ Requisitos:
 
    createdb votaciones_db
 
-2) Ejecutar el schema y los seeds:
+2) Ejecutar el schema y los datos iniciales:
 
    psql -d votaciones_db -f path/to/schema.sql
-   psql -d votaciones_db -f path/to/seeds.sql
+   psql -d votaciones_db -f path/to/inserts.sql
 
 3) Conectar desde la API (en `.env` del server):
 
    DATABASE_URL=postgres://user:password@localhost:5432/votaciones_db
 
 Notas:
-- Las contraseñas en `seeds.sql` están hasheadas con bcrypt; sustituye por tus propios hashes en producción.
+
+Notas:
+- Las contraseñas en `inserts.sql` están hasheadas con bcrypt; sustituye por tus propios hashes en producción.
 - La estructura usa una única tabla `users` con columna `role` que puede ser 'admin' o 'votante'.

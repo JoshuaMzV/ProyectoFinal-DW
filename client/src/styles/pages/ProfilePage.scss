@@ -1,0 +1,327 @@
+@import '../_variables';
+
+// ===================================
+// PROFILE PAGE STYLES
+// ===================================
+
+.profile-page {
+  .page-header {
+    background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+    color: $white;
+    padding: $spacing-2xl;
+    border-bottom: 4px solid $primary-gold;
+    border-radius: $radius-lg $radius-lg 0 0;
+
+    h4 {
+      color: $white !important;
+      font-weight: $fw-bold;
+      font-size: $fs-xl;
+      margin: 0 !important;
+      display: flex;
+      align-items: center;
+      gap: $md;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .profile-card {
+    box-shadow: $shadow-lg;
+    border: none;
+    border-radius: $radius-lg;
+    overflow: hidden;
+
+    .card-header {
+      background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+      border-bottom: 4px solid $primary-gold;
+      padding: $spacing-2xl;
+
+      h4 {
+        color: $white !important;
+        font-weight: $fw-bold;
+        margin: 0 !important;
+      }
+    }
+
+    .card-body {
+      padding: $spacing-2xl;
+
+      h5 {
+        color: $primary-dark;
+        font-weight: $fw-bold;
+        border-bottom: 2px solid $primary-gold;
+        padding-bottom: $md;
+        margin-bottom: $lg;
+        display: flex;
+        align-items: center;
+        gap: $sm;
+
+        &::before {
+          content: '📋';
+        }
+      }
+
+      .section-title {
+        font-size: $fs-lg;
+        font-weight: $fw-bold;
+        color: $primary-dark;
+        margin-top: $xl;
+        margin-bottom: $lg;
+        padding-bottom: $md;
+        border-bottom: 2px solid $primary-gold;
+      }
+    }
+  }
+
+  // ===================================
+  // FORM STYLES
+  // ===================================
+  .form-label {
+    font-weight: $fw-bold;
+    color: $primary-dark;
+    margin-bottom: $sm;
+
+    &::after {
+      content: '';
+    }
+  }
+
+  .form-control,
+  .form-select {
+    border-color: $secondary-border;
+    border-radius: $radius-md;
+    padding: $md $lg;
+    transition: all $transition-base;
+
+    &:focus {
+      border-color: $primary-gold;
+      box-shadow: 0 0 0 0.2rem rgba($primary-gold, 0.25);
+    }
+
+    &:disabled {
+      background-color: $light-gray;
+      cursor: not-allowed;
+    }
+  }
+
+  .form-group {
+    margin-bottom: $lg;
+  }
+
+  // ===================================
+  // PROFILE IMAGE SECTION
+  // ===================================
+  .profile-image-section {
+    text-align: center;
+    padding: $spacing-2xl;
+    background: rgba($primary-gold, 0.05);
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-2xl;
+    border: 2px dashed $primary-gold;
+
+    .profile-image {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid $primary-dark;
+      box-shadow: $shadow-lg;
+      margin-bottom: $lg;
+    }
+
+    .image-preview {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid $primary-gold;
+      box-shadow: $shadow-lg;
+      margin-bottom: $lg;
+    }
+
+    .image-label {
+      font-weight: $fw-bold;
+      color: $primary-dark;
+      margin-bottom: $md;
+      display: block;
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+
+      input[type="file"] {
+        position: absolute;
+        left: -9999px;
+      }
+    }
+  }
+
+  // ===================================
+  // INFO GRID
+  // ===================================
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $lg;
+    margin-bottom: $spacing-2xl;
+
+    .info-item {
+      background: $light-gray;
+      padding: $lg;
+      border-radius: $radius-md;
+      border-left: 4px solid $primary-gold;
+
+      .info-label {
+        font-size: $fs-sm;
+        font-weight: $fw-bold;
+        color: $gray;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: $sm;
+      }
+
+      .info-value {
+        font-size: $fs-lg;
+        font-weight: $fw-bold;
+        color: $primary-dark;
+      }
+
+      &.no-data {
+        .info-value {
+          color: $gray;
+          font-style: italic;
+        }
+      }
+    }
+  }
+
+  // ===================================
+  // ACTION BUTTONS
+  // ===================================
+  .action-buttons {
+    display: flex;
+    gap: $md;
+    flex-wrap: wrap;
+    margin-top: $xl;
+
+    .btn {
+      flex: 1;
+      min-width: 150px;
+      font-weight: $fw-bold;
+      border-radius: $radius-md;
+      transition: all $transition-base;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      &.btn-primary {
+        background: $primary-dark;
+        border-color: $primary-dark;
+        color: $white;
+
+        &:hover:not(:disabled) {
+          background: $primary-navy;
+          border-color: $primary-navy;
+          transform: translateY(-2px);
+          box-shadow: $shadow-lg;
+        }
+      }
+
+      &.btn-success {
+        background: $success;
+        border-color: $success;
+        color: $white;
+
+        &:hover:not(:disabled) {
+          background: darken($success, 10%);
+          border-color: darken($success, 10%);
+          transform: translateY(-2px);
+          box-shadow: $shadow-lg;
+        }
+      }
+
+      &.btn-danger {
+        background: $danger;
+        border-color: $danger;
+        color: $white;
+
+        &:hover:not(:disabled) {
+          background: darken($danger, 10%);
+          border-color: darken($danger, 10%);
+          transform: translateY(-2px);
+          box-shadow: $shadow-lg;
+        }
+      }
+
+      &.btn-outline-primary {
+        color: $primary-dark;
+        border-color: $primary-dark;
+        background: transparent;
+
+        &:hover:not(:disabled) {
+          background: $primary-dark;
+          border-color: $primary-dark;
+          color: $white;
+        }
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  // ===================================
+  // FOOTER INFO
+  // ===================================
+  .footer-info {
+    background: rgba($info, 0.1);
+    border: 1px solid $info;
+    border-left: 4px solid $info;
+    color: $info;
+    padding: $lg;
+    border-radius: $radius-md;
+    margin-top: $xl;
+    font-size: $fs-sm;
+    line-height: $lh-relaxed;
+
+    strong {
+      color: $primary-dark;
+    }
+  }
+}
+
+// ===================================
+// RESPONSIVE
+// ===================================
+
+@media (max-width: $breakpoint-md) {
+  .profile-page {
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    .page-header {
+      padding: $lg;
+
+      h4 {
+        font-size: $fs-lg;
+      }
+    }
+
+    .profile-card {
+      .card-body {
+        padding: $lg;
+      }
+    }
+  }
+}

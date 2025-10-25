@@ -4,7 +4,7 @@ import * as authService from '../services/authService';
 
 // 1. Definimos la forma de los datos que compartiremos
 interface AuthContextType {
-    user: { id: number; rol: string } | null;
+    user: { id: number; role: string; nombre_completo?: string } | null;
     isLoading: boolean; // indica si aún verificamos la sesión
     login: (userData: authService.LoginData) => Promise<void>;
     logout: () => void;
@@ -15,7 +15,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // 3. Creamos el "Proveedor", el componente que envolverá nuestra aplicación
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<{ id: number; rol: string } | null>(null);
+    const [user, setUser] = useState<{ id: number; role: string; nombre_completo?: string } | null>(null);
     const [isLoading, setIsLoading] = useState(true); // iniciamos en true hasta verificar el token
 
     // Este efecto se ejecuta una sola vez cuando la app carga
@@ -23,8 +23,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
             const token = localStorage.getItem('authToken');
             if (token) {
-                const decodedUser: { id: number; rol: string } = jwtDecode(token);
-                setUser(decodedUser);
+                const decoded: any = jwtDecode(token);
+                setUser({ 
+                    id: decoded.id, 
+                    role: decoded.role,
+                    nombre_completo: decoded.nombre_completo 
+                });
             }
         } catch (error) {
             // Si el token es inválido, lo limpiamos
@@ -40,8 +44,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         await authService.login(userData);
         const token = localStorage.getItem('authToken');
         if (token) {
-            const decodedUser: { id: number; rol: string } = jwtDecode(token);
-            setUser(decodedUser);
+            const decoded: any = jwtDecode(token);
+            setUser({ 
+                id: decoded.id, 
+                role: decoded.role,
+                nombre_completo: decoded.nombre_completo
+            });
         }
     };
 

@@ -14,17 +14,16 @@ const protect = (req, res, next) => {
 
             // 3. Si es válido, añadimos los datos del usuario (id, rol) a la petición
             req.user = decoded;
-            next(); // Pasamos al siguiente paso (el controlador de la ruta)
+            return next(); // Pasamos al siguiente paso (el controlador de la ruta)
 
         } catch (error) {
             console.error('Error de token:', error.message);
-            res.status(401).json({ message: 'No autorizado, token inválido.' });
+            return res.status(401).json({ message: 'No autorizado, token inválido.' });
         }
     }
 
-    if (!token) {
-        res.status(401).json({ message: 'No autorizado, no se encontró token.' });
-    }
+    // Si no hay token, retornar error
+    return res.status(401).json({ message: 'No autorizado, no se encontró token.' });
 };
 
 module.exports = { protect };

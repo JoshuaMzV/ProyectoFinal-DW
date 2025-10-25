@@ -1,0 +1,342 @@
+@import '../variables';
+
+// ===================================
+// LOGIN PAGE STYLES
+// ===================================
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+  padding: $lg;
+  position: relative;
+  overflow: hidden;
+
+  // Animated background elements
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: $radius-full;
+    background: radial-gradient(circle, rgba($primary-gold, 0.1) 0%, transparent 70%);
+    animation: float 20s ease-in-out infinite;
+  }
+
+  &::before {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    left: -100px;
+    animation-delay: 0s;
+  }
+
+  &::after {
+    width: 300px;
+    height: 300px;
+    bottom: -50px;
+    right: -50px;
+    animation-delay: 2s;
+  }
+}
+
+.login-card {
+  background: $white;
+  border-radius: $radius-xl;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  animation: slideInScale $transition-slow;
+
+  // Top accent bar
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $primary-gold 0%, $primary-gold-light 100%);
+  }
+}
+
+.login-header {
+  text-align: center;
+  padding: $spacing-2xl;
+  background: linear-gradient(135deg, rgba($primary-dark, 0.05) 0%, rgba($primary-navy, 0.05) 100%);
+  border-bottom: 2px solid $secondary-border;
+
+  .logo {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto $lg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+    border-radius: $radius-lg;
+    box-shadow: $shadow-md;
+
+    img {
+      max-width: 80%;
+      max-height: 80%;
+    }
+  }
+
+  h1 {
+    font-size: $fs-2xl;
+    color: $primary-dark;
+    margin: 0 0 $sm;
+    font-weight: $fw-bold;
+  }
+
+  .subtitle {
+    color: $gray;
+    font-size: $fs-sm;
+    margin: 0;
+  }
+}
+
+.login-body {
+  padding: $spacing-2xl;
+}
+
+.login-form {
+  .form-group {
+    margin-bottom: $xl;
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: $md;
+      font-weight: $fw-semibold;
+      color: $primary-dark;
+      font-size: $fs-sm;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: $sm;
+
+      .icon {
+        font-size: $fs-lg;
+        color: $primary-gold;
+      }
+    }
+
+    input {
+      width: 100%;
+      padding: $md $lg;
+      border: 2px solid $secondary-border;
+      border-radius: $radius-md;
+      font-size: $fs-base;
+      transition: all $transition-base;
+      background-color: $white;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-gold;
+        box-shadow: 0 0 0 3px rgba($primary-gold, 0.1);
+        background-color: rgba($primary-gold, 0.02);
+      }
+
+      &::placeholder {
+        color: $gray;
+      }
+    }
+  }
+}
+
+.login-button {
+  width: 100%;
+  padding: $lg;
+  background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+  color: $white;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $fs-base;
+  font-weight: $fw-bold;
+  cursor: pointer;
+  transition: all $transition-base;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: $shadow-md;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+    background: linear-gradient(135deg, $primary-navy 0%, $primary-dark 100%);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.login-footer {
+  text-align: center;
+  padding: $lg;
+  border-top: 1px solid $secondary-border;
+  background: $light-gray;
+
+  .help-links {
+    display: flex;
+    flex-direction: column;
+    gap: $md;
+
+    a {
+      color: $primary-dark;
+      font-size: $fs-sm;
+      text-decoration: none;
+      transition: all $transition-base;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: $sm;
+
+      &:hover {
+        color: $primary-gold;
+
+        .icon {
+          transform: translateX(3px);
+        }
+      }
+
+      .icon {
+        transition: transform $transition-base;
+      }
+    }
+  }
+}
+
+.login-divider {
+  text-align: center;
+  margin: $xl 0;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: $secondary-border;
+  }
+
+  span {
+    position: relative;
+    background: $white;
+    padding: 0 $md;
+    color: $gray;
+    font-size: $fs-sm;
+  }
+}
+
+.error-message {
+  background-color: rgba($danger, 0.1);
+  color: $danger;
+  padding: $md $lg;
+  border-radius: $radius-md;
+  border-left: 4px solid $danger;
+  margin-bottom: $lg;
+  animation: slideIn $transition-base;
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+}
+
+.success-message {
+  background-color: rgba($success, 0.1);
+  color: $success;
+  padding: $md $lg;
+  border-radius: $radius-md;
+  border-left: 4px solid $success;
+  margin-bottom: $lg;
+  animation: slideIn $transition-base;
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+}
+
+// ===================================
+// ANIMATIONS
+// ===================================
+
+@keyframes slideInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+}
+
+// ===================================
+// RESPONSIVE
+// ===================================
+
+@media (max-width: $breakpoint-sm) {
+  .login-container {
+    padding: $md;
+
+    &::before,
+    &::after {
+      width: 200px;
+      height: 200px;
+    }
+  }
+
+  .login-card {
+    max-width: 100%;
+  }
+
+  .login-header {
+    padding: $xl;
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: $md;
+    }
+
+    h1 {
+      font-size: $fs-xl;
+    }
+  }
+
+  .login-body {
+    padding: $xl;
+  }
+
+  .login-button {
+    padding: $md $lg;
+  }
+}

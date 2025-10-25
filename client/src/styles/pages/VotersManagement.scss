@@ -1,0 +1,166 @@
+@import '../_variables';
+
+// ===================================
+// VOTERS MANAGEMENT STYLES
+// ===================================
+
+.voters-management {
+  .management-card {
+    box-shadow: $shadow-lg;
+    border: none;
+    border-radius: $radius-lg;
+    overflow: hidden;
+
+    .management-header {
+      background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+      border-bottom: 4px solid $primary-gold;
+      padding: $spacing-2xl;
+
+      h2 {
+        color: $white !important;
+        font-weight: $fw-bold;
+        margin: 0 !important;
+        display: flex;
+        align-items: center;
+        gap: $md;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .stats-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: $lg;
+
+      .stat-badge {
+        background: linear-gradient(135deg, rgba($primary-dark, 0.1) 0%, rgba($primary-gold, 0.1) 100%);
+        border: 2px solid $primary-gold;
+        border-radius: $radius-lg;
+        padding: $xl;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: $md;
+
+        .stat-label {
+          font-size: $fs-sm;
+          font-weight: $fw-bold;
+          color: $gray;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+          font-size: $fs-4xl;
+          font-weight: $fw-bold;
+          color: $primary-dark;
+        }
+      }
+    }
+
+    .table-responsive {
+      margin-top: $xl;
+    }
+  }
+
+  .voters-table {
+    border-collapse: collapse;
+    background: $white;
+
+    thead {
+      background: #f8f9fa;
+      border-bottom: 2px solid $primary-gold;
+
+      th {
+        color: $primary-dark;
+        font-weight: $fw-bold;
+        padding: $lg;
+        text-transform: uppercase;
+        font-size: $fs-sm;
+        letter-spacing: 0.5px;
+        border: none;
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid $secondary-border;
+        transition: all $transition-base;
+
+        &:hover {
+          background: rgba($primary-gold, 0.05);
+        }
+
+        td {
+          padding: $lg;
+          color: $dark-gray;
+          vertical-align: middle;
+
+          &.voter-name {
+            font-weight: $fw-semibold;
+            color: $primary-dark;
+          }
+        }
+
+        .btn {
+          font-weight: $fw-bold;
+          border-radius: $radius-md;
+          transition: all $transition-base;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-size: $fs-xs;
+
+          &.btn-danger {
+            background: $danger;
+            border-color: $danger;
+            color: $white;
+
+            &:hover:not(:disabled) {
+              background: darken($danger, 10%);
+              border-color: darken($danger, 10%);
+              transform: translateY(-2px);
+              box-shadow: $shadow-lg;
+            }
+
+            &:disabled {
+              opacity: 0.6;
+              cursor: not-allowed;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ===================================
+// RESPONSIVE
+// ===================================
+
+@media (max-width: $breakpoint-md) {
+  .voters-management {
+    .management-header {
+      padding: $lg;
+
+      h2 {
+        font-size: $fs-lg;
+      }
+    }
+
+    .stats-section {
+      grid-template-columns: 1fr;
+    }
+
+    .voters-table {
+      thead th {
+        padding: $md;
+        font-size: 10px;
+      }
+
+      tbody td {
+        padding: $md;
+        font-size: $fs-sm;
+      }
+    }
+  }
+}

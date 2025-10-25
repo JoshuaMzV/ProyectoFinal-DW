@@ -1,11 +1,25 @@
 import { useState, useEffect } from 'react';
 import { Card, Button, Container, Row, Col, Alert } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/authContext';
 import { getAllCampaigns, Campaign } from '../services/conpaignService';
 
 const HomePage = () => {
+    const { user } = useAuth();
+    const navigate = useNavigate();
     const [campaigns, setCampaigns] = useState<Campaign[]>([]);
     const [error, setError] = useState('');
+
+    // Redirigir según rol si está logueado
+    useEffect(() => {
+        if (user) {
+            if (user.role === 'admin') {
+                navigate('/admin');
+            } else if (user.role === 'votante') {
+                navigate('/voter');
+            }
+        }
+    }, [user, navigate]);
 
     useEffect(() => {
         const fetchCampaigns = async () => {

@@ -1,0 +1,110 @@
+// ===================================
+// COLOR PALETTE - Inspirado en SIA
+// ===================================
+
+// Primary Colors - Basados en el diseño original
+$primary-dark: #001a4d;        // Azul oscuro (fondo)
+$primary-navy: #002b7a;        // Azul más oscuro (variación)
+$primary-gold: #F4A500;        // Dorado/Naranja (acentos)
+$primary-gold-light: #FFB700;  // Dorado más claro
+$primary-gold-dark: #D48800;   // Dorado más oscuro
+
+// Secondary Colors - Profesionales
+$secondary-blue: #1f3a93;      // Azul profesional
+$secondary-light: #e8f0ff;     // Azul muy claro (backgrounds)
+$secondary-border: #d0dff0;    // Azul claro para bordes
+
+// Status Colors
+$success: #27ae60;             // Verde
+$warning: #f39c12;             // Naranja (warning)
+$danger: #e74c3c;              // Rojo
+$info: #3498db;                // Azul información
+
+// Neutral Colors
+$white: #ffffff;
+$light-gray: #f8f9fa;
+$light-gray-2: #ecf0f1;
+$gray: #7f8c8d;
+$dark-gray: #34495e;
+$black: #2c3e50;
+
+// ===================================
+// TYPOGRAPHY
+// ===================================
+
+$font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$font-family-heading: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+// Font Sizes
+$fs-xs: 0.75rem;        // 12px
+$fs-sm: 0.875rem;       // 14px
+$fs-base: 1rem;         // 16px
+$fs-lg: 1.125rem;       // 18px
+$fs-xl: 1.25rem;        // 20px
+$fs-2xl: 1.5rem;        // 24px
+$fs-3xl: 1.875rem;      // 30px
+$fs-4xl: 2.25rem;       // 36px
+
+// Font Weights
+$fw-light: 300;
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
+$fw-bold: 700;
+
+// Line Heights
+$lh-tight: 1.2;
+$lh-normal: 1.5;
+$lh-relaxed: 1.75;
+
+// ===================================
+// SPACING
+// ===================================
+
+$spacing-unit: 0.5rem;  // 8px base unit
+
+// Spacing Scale
+$xs: 4px;               // Espacios mínimos
+$sm: 8px;               // Espacios pequeños
+$md: 12px;              // Espacios normales
+$lg: 16px;              // Espacios medianos
+$xl: 20px;              // Espacios grandes
+$spacing-2xl: 24px;     // Espacios muy grandes
+$spacing-3xl: 32px;     // Espacios enormes
+$spacing-4xl: 40px;     // Espacios máximos
+
+// ===================================
+// BORDER RADIUS
+// ===================================
+
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+$radius-full: 50%;
+
+// ===================================
+// SHADOWS
+// ===================================
+
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+$shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+
+// ===================================
+// TRANSITIONS
+// ===================================
+
+$transition-fast: 150ms ease-in-out;
+$transition-base: 250ms ease-in-out;
+$transition-slow: 350ms ease-in-out;
+
+// Breakpoints
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-2xl: 1400px;

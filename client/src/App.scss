@@ -1,0 +1,495 @@
+@import './styles/variables';
+
+// ===================================
+// APP LAYOUT - STICKY FOOTER
+// ===================================
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.main-content {
+  flex: 1 0 auto; // Empuja el footer hacia abajo
+  padding-bottom: $spacing-3xl;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// ===================================
+// PAGE SECTIONS
+// ===================================
+
+.section-header {
+  background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+  color: $white;
+  padding: $spacing-3xl $lg;
+  margin-bottom: $spacing-3xl;
+  border-bottom: 4px solid $primary-gold;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba($primary-gold, 0.1) 0%, transparent 70%);
+    animation: float 20s ease-in-out infinite;
+  }
+
+  h1, h2 {
+    color: $white;
+    position: relative;
+    z-index: 1;
+  }
+
+  .breadcrumb {
+    margin-top: $md;
+    font-size: $fs-sm;
+    color: rgba($white, 0.8);
+  }
+}
+
+// ===================================
+// DASHBOARD CARDS
+// ===================================
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-2xl;
+  margin-bottom: $spacing-3xl;
+}
+
+.stats-card {
+  background: $white;
+  border-radius: $radius-lg;
+  padding: $spacing-2xl;
+  border-left: 4px solid $primary-gold;
+  box-shadow: $shadow-md;
+  transition: all $transition-base;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: $shadow-xl;
+  }
+
+  .stat-label {
+    font-size: $fs-sm;
+    color: $gray;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: $sm;
+    font-weight: $fw-semibold;
+  }
+
+  .stat-value {
+    font-size: $fs-4xl;
+    font-weight: $fw-bold;
+    color: $primary-dark;
+    margin-bottom: $md;
+  }
+
+  .stat-detail {
+    font-size: $fs-sm;
+    color: $success;
+
+    &.warning {
+      color: $warning;
+    }
+
+    &.danger {
+      color: $danger;
+    }
+  }
+}
+
+// ===================================
+// CAMPAIGN CARDS
+// ===================================
+
+.campaign-card {
+  background: $white;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-md;
+  transition: all $transition-base;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &:hover {
+    box-shadow: $shadow-xl;
+    transform: translateY(-6px);
+  }
+
+  .campaign-header {
+    background: linear-gradient(135deg, $primary-navy 0%, $primary-dark 100%);
+    color: $white;
+    padding: $lg;
+    border-bottom: 3px solid $primary-gold;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+  }
+
+  .campaign-title {
+    font-size: $fs-xl;
+    font-weight: $fw-bold;
+    color: $white;
+    margin: 0;
+  }
+
+  .campaign-body {
+    padding: $lg;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .campaign-description {
+    color: $dark-gray;
+    margin-bottom: $lg;
+    font-size: $fs-sm;
+    line-height: $lh-relaxed;
+    flex-grow: 1;
+  }
+
+  .campaign-footer {
+    display: flex;
+    gap: $md;
+    padding-top: $lg;
+    border-top: 1px solid $secondary-border;
+
+    .badge {
+      display: inline-block;
+      padding: $sm $md;
+      border-radius: $radius-sm;
+      font-size: $fs-xs;
+      font-weight: $fw-semibold;
+      text-transform: uppercase;
+
+      &.badge-active {
+        background-color: rgba($success, 0.2);
+        color: $success;
+      }
+
+      &.badge-inactive {
+        background-color: rgba($danger, 0.2);
+        color: $danger;
+      }
+
+      &.badge-pending {
+        background-color: rgba($warning, 0.2);
+        color: $warning;
+      }
+    }
+  }
+}
+
+// ===================================
+// FORM SECTIONS
+// ===================================
+
+.form-section {
+  background: $white;
+  border-radius: $radius-lg;
+  padding: $spacing-2xl;
+  margin-bottom: $spacing-2xl;
+  box-shadow: $shadow-md;
+  border-left: 4px solid $primary-gold;
+
+  .section-title {
+    font-size: $fs-xl;
+    font-weight: $fw-bold;
+    color: $primary-dark;
+    margin-bottom: $xl;
+    padding-bottom: $lg;
+    border-bottom: 2px solid $secondary-border;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $lg;
+    margin-bottom: $lg;
+  }
+}
+
+// ===================================
+// PROFILE SECTION
+// ===================================
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2xl;
+  padding: $spacing-2xl;
+  background: linear-gradient(135deg, rgba($primary-dark, 0.95) 0%, rgba($primary-navy, 0.95) 100%);
+  border-radius: $radius-lg;
+  color: $white;
+  margin-bottom: $spacing-3xl;
+
+  .profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: $radius-full;
+    border: 4px solid $primary-gold;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .profile-info {
+    flex-grow: 1;
+
+    .profile-name {
+      font-size: $fs-2xl;
+      font-weight: $fw-bold;
+      margin: 0;
+      margin-bottom: $sm;
+    }
+
+    .profile-role {
+      display: inline-block;
+      background: $primary-gold;
+      color: $primary-dark;
+      padding: $sm $md;
+      border-radius: $radius-full;
+      font-size: $fs-sm;
+      font-weight: $fw-semibold;
+      text-transform: uppercase;
+    }
+
+    .profile-meta {
+      margin-top: $md;
+      font-size: $fs-sm;
+      color: rgba($white, 0.8);
+    }
+  }
+}
+
+// ===================================
+// VOTING SECTION
+// ===================================
+
+.candidates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: $spacing-2xl;
+  margin-bottom: $spacing-3xl;
+}
+
+.candidate-card {
+  background: $white;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-md;
+  transition: all $transition-base;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: $shadow-xl;
+    transform: scale(1.05);
+  }
+
+  &.selected {
+    border: 3px solid $primary-gold;
+    box-shadow: 0 0 20px rgba($primary-gold, 0.3);
+  }
+
+  .candidate-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: $secondary-light;
+  }
+
+  .candidate-info {
+    padding: $lg;
+
+    .candidate-name {
+      font-size: $fs-lg;
+      font-weight: $fw-bold;
+      color: $primary-dark;
+      margin-bottom: $sm;
+    }
+
+    .candidate-party {
+      font-size: $fs-sm;
+      color: $gray;
+      margin-bottom: $md;
+    }
+
+    .vote-btn {
+      width: 100%;
+      padding: $md;
+      background: linear-gradient(135deg, $primary-gold 0%, $primary-gold-dark 100%);
+      color: $white;
+      border: none;
+      border-radius: $radius-md;
+      font-weight: $fw-bold;
+      cursor: pointer;
+      transition: all $transition-base;
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: $shadow-lg;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      &.voted {
+        background: $success;
+      }
+    }
+  }
+}
+
+// ===================================
+// TABLE STYLES
+// ===================================
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: $white;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-md;
+
+  thead {
+    background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+    color: $white;
+
+    th {
+      padding: $lg;
+      text-align: left;
+      font-weight: $fw-semibold;
+      text-transform: uppercase;
+      font-size: $fs-xs;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid $primary-gold;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $secondary-border;
+      transition: background-color $transition-base;
+
+      &:hover {
+        background-color: $light-gray;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      td {
+        padding: $lg;
+        color: $dark-gray;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: $sm $md;
+        border-radius: $radius-full;
+        font-size: $fs-xs;
+        font-weight: $fw-semibold;
+        text-transform: uppercase;
+
+        &.active {
+          background: rgba($success, 0.2);
+          color: $success;
+        }
+
+        &.inactive {
+          background: rgba($danger, 0.2);
+          color: $danger;
+        }
+      }
+    }
+  }
+}
+
+// ===================================
+// ANIMATIONS
+// ===================================
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-in-scale {
+  animation: fadeInScale $transition-base;
+}
+
+// ===================================
+// RESPONSIVE ADJUSTMENTS
+// ===================================
+
+@media (max-width: $breakpoint-md) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .candidates-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+
+    .profile-image {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .section-header {
+    padding: $spacing-2xl $lg;
+    margin-bottom: $spacing-2xl;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .data-table {
+    font-size: $fs-sm;
+
+    th, td {
+      padding: $md !important;
+    }
+  }
+}

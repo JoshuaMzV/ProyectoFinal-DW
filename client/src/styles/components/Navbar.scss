@@ -1,0 +1,237 @@
+@import '../_variables';
+
+// ===================================
+// NAVBAR CUSTOM STYLES
+// ===================================
+
+.navbar {
+  background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%) !important;
+  box-shadow: $shadow-lg;
+  padding: $lg 0 !important;
+  border-bottom: 3px solid $primary-gold;
+}
+
+.navbar-brand {
+  font-size: $fs-2xl;
+  font-weight: $fw-bold;
+  color: $primary-gold !important;
+  transition: all $transition-base;
+  display: flex;
+  align-items: center;
+  gap: $md;
+
+  &:hover {
+    color: $primary-gold-light !important;
+    transform: scale(1.05);
+  }
+
+}
+
+.navbar-collapse {
+  justify-content: flex-end;
+}
+
+// Nav items
+.nav-link {
+  color: $white !important;
+  font-weight: $fw-medium;
+  margin: 0 $sm;
+  transition: all $transition-base;
+  position: relative;
+  padding: $md $lg !important;
+  display: flex;
+  align-items: center;
+  gap: $sm;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: $primary-gold;
+    transition: width $transition-base;
+  }
+
+  &:hover {
+    color: $primary-gold !important;
+
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+// Dropdown styling
+.dropdown-toggle {
+  color: $white !important;
+  font-weight: $fw-medium;
+  display: flex;
+  align-items: center;
+  gap: $md !important;
+  padding: $md $lg !important;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+
+  &::after {
+    content: '';
+    display: none; // Esconder el after por defecto de Bootstrap
+  }
+
+  &:hover,
+  &:focus {
+    background: rgba($primary-gold, 0.1);
+    color: $primary-gold !important;
+  }
+
+  &[aria-expanded='true'] {
+    background: rgba($primary-gold, 0.15);
+    color: $primary-gold !important;
+  }
+}
+
+.dropdown-menu {
+  background: $white !important;
+  border: 2px solid $primary-gold !important;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xl;
+  margin-top: $sm !important;
+  min-width: 220px;
+
+  .dropdown-item {
+    color: $primary-dark !important;
+    font-weight: $fw-medium;
+    padding: $md $lg !important;
+    transition: all $transition-base;
+    display: flex;
+    align-items: center;
+    gap: $md;
+
+    &:hover,
+    &:focus {
+      background-color: rgba($primary-gold, 0.1) !important;
+      color: $primary-gold !important;
+      padding-left: calc(#{$lg} + 4px) !important;
+    }
+
+    &:active {
+      background-color: rgba($primary-gold, 0.2) !important;
+      color: $primary-dark !important;
+    }
+  }
+
+  .dropdown-divider {
+    border-top: 1px solid rgba($primary-dark, 0.15) !important;
+    margin: $sm 0 !important;
+  }
+
+  // Título "Gestión" - dorado, bold y clickeable
+  .gestion-title {
+    color: $primary-gold !important;
+    font-weight: $fw-bold !important;
+    font-size: $fs-base;
+    background: rgba($primary-gold, 0.05) !important;
+    cursor: pointer !important;
+    pointer-events: auto;
+    transition: all $transition-base;
+
+    &:hover {
+      background: rgba($primary-gold, 0.1) !important;
+      color: $primary-gold-light !important;
+    }
+
+    &:focus {
+      background: rgba($primary-gold, 0.1) !important;
+      color: $primary-gold !important;
+    }
+  }
+
+  // Items bajo Gestión - indentados
+  .gestion-subitem {
+    color: $primary-dark !important;
+    padding-left: calc(#{$lg} + #{$md}) !important;
+    font-size: $fs-sm;
+    background: rgba($primary-gold, 0.02);
+
+    &:hover,
+    &:focus {
+      background: rgba($primary-gold, 0.1) !important;
+      color: $primary-gold !important;
+      padding-left: calc(#{$lg} + #{$md} + 4px) !important;
+    }
+  }
+}
+
+// Profile image
+.profile-image-navbar {
+  width: 45px;
+  height: 45px;
+  border-radius: $radius-full;
+  border: 3px solid $primary-gold;
+  object-fit: cover;
+  transition: all $transition-base;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $primary-gold-light;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba($primary-gold, 0.3);
+  }
+}
+
+// Welcome text styling
+.welcome-text {
+  color: $white;
+  font-weight: $fw-medium;
+  display: flex;
+  align-items: center;
+  gap: $sm;
+  margin: 0;
+  font-size: $fs-sm;
+
+  .arrow-down {
+    font-size: $fs-xs;
+    transition: transform $transition-base;
+  }
+
+  &:hover .arrow-down {
+    transform: translateY(2px);
+    color: $primary-gold;
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .navbar {
+    padding: $md 0 !important;
+  }
+
+  .navbar-brand {
+    font-size: $fs-xl;
+
+    &::before {
+      font-size: $fs-lg;
+    }
+  }
+
+  .nav-link,
+  .dropdown-toggle {
+    padding: $sm $md !important;
+    margin: $sm 0 !important;
+  }
+
+  .dropdown-menu {
+    min-width: 180px;
+    margin-top: $md !important;
+  }
+
+  .profile-image-navbar {
+    width: 35px;
+    height: 35px;
+  }
+
+  .welcome-text {
+    font-size: $fs-xs;
+  }
+}

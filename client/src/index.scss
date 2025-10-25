@@ -1,0 +1,401 @@
+@import './styles/variables';
+
+// ===================================
+// RESET & BASE STYLES
+// ===================================
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $fs-base;
+  font-weight: $fw-regular;
+  line-height: $lh-normal;
+  color: $black;
+  background-color: $light-gray;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+// ===================================
+// TYPOGRAPHY
+// ===================================
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
+  font-weight: $fw-bold;
+  line-height: $lh-tight;
+  color: $primary-dark;
+  margin-bottom: $lg;
+}
+
+h1 { font-size: $fs-4xl; }
+h2 { font-size: $fs-3xl; }
+h3 { font-size: $fs-2xl; }
+h4 { font-size: $fs-xl; }
+h5 { font-size: $fs-lg; }
+h6 { font-size: $fs-base; }
+
+p {
+  margin-bottom: $md;
+  color: $dark-gray;
+}
+
+a {
+  color: $primary-gold;
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $primary-gold-dark;
+    text-decoration: underline;
+  }
+}
+
+// ===================================
+// BUTTONS
+// ===================================
+
+.btn {
+  font-weight: $fw-semibold;
+  border-radius: $radius-md;
+  padding: $md $lg;
+  transition: all $transition-base;
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-size: $fs-base;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($primary-gold, 0.25);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Primary Button
+.btn-primary {
+  background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+  color: $white;
+  border-color: $primary-dark;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, $primary-navy 0%, $primary-dark 100%);
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+// Gold Button (Secondary)
+.btn-gold {
+  background: linear-gradient(135deg, $primary-gold 0%, $primary-gold-dark 100%);
+  color: $white;
+  border-color: $primary-gold;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, $primary-gold-light 0%, $primary-gold 100%);
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+}
+
+// Outline Button
+.btn-outline {
+  background: transparent;
+  color: $primary-dark;
+  border-color: $primary-dark;
+
+  &:hover:not(:disabled) {
+    background: $primary-dark;
+    color: $white;
+  }
+}
+
+// ===================================
+// FORMS
+// ===================================
+
+.form-group {
+  margin-bottom: $xl;
+}
+
+label {
+  display: block;
+  font-weight: $fw-semibold;
+  margin-bottom: $sm;
+  color: $primary-dark;
+  font-size: $fs-sm;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+  width: 100%;
+  padding: $md $lg;
+  border: 2px solid $secondary-border;
+  border-radius: $radius-md;
+  font-family: $font-family-base;
+  font-size: $fs-base;
+  transition: all $transition-base;
+  background-color: $white;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-gold;
+    box-shadow: 0 0 0 3px rgba($primary-gold, 0.1);
+  }
+
+  &:disabled {
+    background-color: $light-gray;
+    color: $gray;
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: $gray;
+  }
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+// ===================================
+// CARDS & CONTAINERS
+// ===================================
+
+.card {
+  background: $white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+  transition: all $transition-base;
+  border: 1px solid $secondary-border;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-4px);
+  }
+}
+
+.card-header {
+  background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+  color: $white;
+  padding: $lg;
+  border-bottom: 4px solid $primary-gold;
+}
+
+.card-body {
+  padding: $lg;
+}
+
+.card-footer {
+  background-color: $light-gray;
+  padding: $lg;
+  border-top: 1px solid $secondary-border;
+}
+
+// ===================================
+// ALERTS
+// ===================================
+
+.alert {
+  padding: $md $lg;
+  border-radius: $radius-md;
+  border-left: 4px solid;
+  margin-bottom: $lg;
+  animation: slideIn $transition-base;
+
+  &.alert-success {
+    background-color: rgba($success, 0.1);
+    border-left-color: $success;
+    color: darken($success, 20%);
+  }
+
+  &.alert-danger {
+    background-color: rgba($danger, 0.1);
+    border-left-color: $danger;
+    color: darken($danger, 20%);
+  }
+
+  &.alert-warning {
+    background-color: rgba($warning, 0.1);
+    border-left-color: $warning;
+    color: darken($warning, 20%);
+  }
+
+  &.alert-info {
+    background-color: rgba($info, 0.1);
+    border-left-color: $info;
+    color: darken($info, 20%);
+  }
+}
+
+// ===================================
+// NAVBAR STYLING
+// ===================================
+
+.navbar {
+  background: linear-gradient(135deg, $primary-dark 0%, $primary-navy 100%);
+  box-shadow: $shadow-md;
+  padding: $lg !important;
+
+  .navbar-brand {
+    font-weight: $fw-bold;
+    font-size: $fs-2xl;
+    color: $primary-gold !important;
+    transition: color $transition-base;
+
+    &:hover {
+      color: $primary-gold-light !important;
+    }
+  }
+
+  .nav-link {
+    color: $white !important;
+    font-weight: $fw-medium;
+    margin: 0 $sm;
+    transition: color $transition-base;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: $primary-gold;
+      transition: width $transition-base;
+    }
+
+    &:hover {
+      color: $primary-gold !important;
+
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// ===================================
+// UTILS
+// ===================================
+
+.text-primary {
+  color: $primary-dark;
+}
+
+.text-gold {
+  color: $primary-gold;
+}
+
+.text-success {
+  color: $success;
+}
+
+.text-danger {
+  color: $danger;
+}
+
+.bg-primary {
+  background-color: $primary-dark;
+  color: $white;
+}
+
+.bg-light {
+  background-color: $light-gray;
+}
+
+.shadow {
+  box-shadow: $shadow-md;
+}
+
+.shadow-lg {
+  box-shadow: $shadow-lg;
+}
+
+// ===================================
+// ANIMATIONS
+// ===================================
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+// ===================================
+// RESPONSIVE
+// ===================================
+
+@media (max-width: $breakpoint-md) {
+  h1 { font-size: $fs-3xl; }
+  h2 { font-size: $fs-2xl; }
+  h3 { font-size: $fs-xl; }
+
+  .btn {
+    padding: $md $md;
+    font-size: $fs-sm;
+  }
+
+  .container {
+    padding: 0 $md;
+  }
+}
