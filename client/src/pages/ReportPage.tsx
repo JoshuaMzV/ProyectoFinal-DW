@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Table, Card, Button, Alert, Spinner, Row, Col, Form } from 'react-bootstrap';
+import { Container, Table, Card, Button, Alert, Spinner, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../context/authContext';
 import { getAllCampaigns } from '../services/conpaignService';
 import '../styles/pages/ReportPage.scss';
@@ -17,12 +17,10 @@ interface CampaignReport {
 
 const ReportPage = () => {
     const { user } = useAuth();
-    const [campaigns, setCampaigns] = useState<any[]>([]);
     const [reportData, setReportData] = useState<CampaignReport[]>([]);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState<'success' | 'error'>('success');
-    const [exportFormat, setExportFormat] = useState('csv');
 
     useEffect(() => {
         loadReport();

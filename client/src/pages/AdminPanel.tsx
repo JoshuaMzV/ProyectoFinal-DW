@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Button, Form, ListGroup, Alert, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Form, Alert } from 'react-bootstrap';
 import { useAuth } from '../context/authContext';
 import { getAllCampaigns } from '../services/conpaignService';
 import CampaignEditCard from '../components/CampaignEditCard';
@@ -36,7 +36,6 @@ const AdminPanel = () => {
 
     // Estado: listar votantes (para agregar candidato desde usuario existente)
     const [voters, setVoters] = useState<any[]>([]);
-    const [showVotersModal, setShowVotersModal] = useState(false);
 
     // Estado: listar todos los candidatos del sistema
     const [allCandidates, setAllCandidates] = useState<any[]>([]);
@@ -81,6 +80,7 @@ const AdminPanel = () => {
     // Hook: Cargar campañas y candidatos al montar
     useEffect(() => {
         loadCampaigns();
+        // intentionally not adding loadAllCandidates to deps to avoid re-creation loops
         loadAllCandidates();
     }, []);
 
@@ -140,7 +140,7 @@ const AdminPanel = () => {
         try {
             if (candidateMode === 'from-list') {
                 // Encontrar el candidato seleccionado
-                const selectedCandidate = allCandidates.find(c => c.id == selectedExistingCandidateId);
+                const selectedCandidate = allCandidates.find(c => c.id === selectedExistingCandidateId);
                 if (!selectedCandidate) {
                     setCandidateMessage('❌ Candidato no encontrado');
                     return;

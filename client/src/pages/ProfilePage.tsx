@@ -102,28 +102,7 @@ const ProfilePage = () => {
         }
     };
 
-    const handleUploadImage = async (file: File) => {
-        try {
-            setUploadingImage(true);
-            await uploadProfileImage(file);
-            setMessageType('success');
-            setMessage('✅ Imagen de perfil subida exitosamente');
-            
-            // Recargar perfil para mostrar nueva imagen
-            setTimeout(() => {
-                const loadProfile = async () => {
-                    const data = await getMyCompleteProfile();
-                    setProfile(data);
-                };
-                loadProfile();
-            }, 1000);
-        } catch (err: any) {
-            setMessageType('error');
-            setMessage(`❌ Error: ${err.response?.data?.message || err.message}`);
-        } finally {
-            setUploadingImage(false);
-        }
-    };
+    // ...existing code...
 
     const handleDeleteImage = async () => {
         try {
