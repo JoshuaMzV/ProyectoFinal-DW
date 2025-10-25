@@ -21,6 +21,7 @@ const ReportPage = () => {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState<'success' | 'error'>('success');
+    const [campaigns, setCampaigns] = useState<any[]>([]);
 
     useEffect(() => {
         loadReport();
