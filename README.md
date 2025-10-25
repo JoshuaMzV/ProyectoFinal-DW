@@ -12,23 +12,31 @@ Este repositorio contiene el proyecto completo del sistema de votaciones: fronte
 
 ## Archivos de documentación (enlaces)
 
-- Diseño y sistema de diseño
-  - `[README_SISTEMA_DISEÑO.md]` - Descripción completa del sistema de diseño
-  - `DESIGN_SYSTEM_SUMMARY.md` - Resumen ejecutivo del sistema de diseño
-  - `DESIGN_SYSTEM_VISUAL.md` - Guía visual
-  - `client/src/styles/DESIGN_SYSTEM.md` - Documentación técnica (dentro de `client`)
-  - `SCSS_IMPLEMENTATION_GUIDE.md` - Guía de implementación SCSS
-  - `COMPONENT_EXAMPLES.tsx` - Ejemplos de componentes
+## Enlaces directos a la documentación (navegación rápida)
+- [`README_SISTEMA_DISEÑO.md`](README_SISTEMA_DISEÑO.md)
+- [`DESIGN_SYSTEM_SUMMARY.md`](DESIGN_SYSTEM_SUMMARY.md)
+- [`DESIGN_SYSTEM_VISUAL.md`](DESIGN_SYSTEM_VISUAL.md)
+- [`client/src/styles/DESIGN_SYSTEM.md`](client/src/styles/DESIGN_SYSTEM.md)
+- [`SCSS_IMPLEMENTATION_GUIDE.md`](SCSS_IMPLEMENTATION_GUIDE.md)
+- [`CHECKLIST_SISTEMA_DISEÑO.md`](CHECKLIST_SISTEMA_DISEÑO.md)
+- [`COMPONENT_EXAMPLES.tsx`](COMPONENT_EXAMPLES.tsx) (ejemplos de componentes)
+- [`EVALUACION_REQUERIMIENTOS.md`](EVALUACION_REQUERIMIENTOS.md)
+- [`DEPLOY_RENDER.md`](DEPLOY_RENDER.md)
+- [`RENDER_STEPS.md`](RENDER_STEPS.md)
+- [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md)
+- [`STATUS.md`](STATUS.md)
+- Cliente: [`client/README.md`](client/README.md)
+- DB: [`server/database/README.md`](server/database/README.md)
 
-- Entrega, estado y despliegue
-  - `DEPLOY_RENDER.md` - Notas para desplegar en Render
-  - `RENDER_STEPS.md` - Pasos para Render
-  - `STATUS.md` - Estado del proyecto
-  - `TROUBLESHOOTING.md` - Problemas comunes y soluciones
-  - `CHECKLIST_SISTEMA_DISEÑO.md` - Checklist de entrega
+## Archivos importantes (código que conviene revisar)
+- Autenticación / JWT:
+  - [`server/routes/auth.js`](server/routes/auth.js)
+  - [`server/middleware/authMiddleware.js`](server/middleware/authMiddleware.js)
+  - [`server/index.js`](server/index.js)
+  - [`client/src/services/authService.ts`](client/src/services/authService.ts)
+  - [`client/src/services/axiosConfig.ts`](client/src/services/axiosConfig.ts)
+  - [`client/src/context/authContext.tsx`](client/src/context/authContext.tsx)
 
-- Otras
-  - `EVALUACION_REQUERIMIENTOS.md` - Evaluación de requerimientos
 
 > Para abrir cualquiera de los documentos, haz clic en el nombre del archivo dentro del repositorio en GitHub o abre la ruta relativa en tu editor.
 
