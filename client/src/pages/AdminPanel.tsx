@@ -36,7 +36,6 @@ const AdminPanel = () => {
 
     // Estado: listar votantes (para agregar candidato desde usuario existente)
     const [voters, setVoters] = useState<any[]>([]);
-    const [showVotersModal, setShowVotersModal] = useState(false);
 
     // Estado: listar todos los candidatos del sistema
     const [allCandidates, setAllCandidates] = useState<any[]>([]);
@@ -81,8 +80,8 @@ const AdminPanel = () => {
     // Hook: Cargar campañas y candidatos al montar
     useEffect(() => {
         loadCampaigns();
-        // intentionally not adding loadAllCandidates to deps to avoid re-creation loops
         loadAllCandidates();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Guard: Si no es admin, mostrar error
@@ -155,7 +154,7 @@ const AdminPanel = () => {
 
                 setCandidateMessage(`✅ Candidato "${selectedCandidate.nombre}" agregado a la campaña`);
             } else {
-                const response = await apiClient.post(`/campaigns/${selectedCampaignId}/candidates`, {
+                await apiClient.post(`/campaigns/${selectedCampaignId}/candidates`, {
                     nombre: candidateMode === 'new' ? candidateName : null,
                     userId: candidateMode === 'existing' ? parseInt(candidateUserId) : null
                 });
@@ -180,7 +179,6 @@ const AdminPanel = () => {
         try {
             const response = await apiClient.get('/auth/votantes');
             setVoters(response.data.votantes || []);
-            setShowVotersModal(true);
         } catch (err) {
             setCandidateMessage('Error al cargar votantes');
         }
